@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Container from '@components/ui/container/container.component';
+import NextProgress from "next-progress";
 import { Typography } from '@components/ui';
 import { applyTheme } from 'themes/utils/theme';
 import { PageLayout } from '../components/layout';
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <PageLayout>
+      <NextProgress delay={150} height={2} color="var(--color-primary)" options={{ showSpinner: false }} />
       <Container>
         <Typography type="h1" variant="header4">Hi</Typography>
         <Typography variant="intro">eyo</Typography>
