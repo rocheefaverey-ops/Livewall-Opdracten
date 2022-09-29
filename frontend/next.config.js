@@ -34,12 +34,6 @@ module.exports = {
   images: {
     domains: ['c.tenor.com']
   },
-
-  // Enables scroll restoration when you go back to previous page
-  experimental: {
-    scrollRestoration: true
-  },
-
   async headers() {
     if (process.env.NODE_ENV !== 'development') {
       const whitelistedDomains = [
@@ -84,5 +78,10 @@ module.exports = {
       ];
     }
     return [];
-  }
-};
+  },
+
+  // Enables scroll restoration when you go back to previous page
+  experimental: {
+    scrollRestoration: true
+  },
+}
