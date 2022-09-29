@@ -35,6 +35,16 @@ module.exports = {
 
     ]
   },
+  i18n: {
+    locales: ['nl-NL', 'en-US'],
+    defaultLocale: 'nl-NL',
+  },
+
+  // Enables scroll restoration when you go back to previous page
+  experimental: {
+    scrollRestoration: true
+  },
+}
 
   async headers() {
     if (process.env.NODE_ENV !== 'development') {
