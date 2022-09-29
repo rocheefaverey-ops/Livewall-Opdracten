@@ -1,46 +1,8 @@
-const ContentSecurityPolicy = `
-  default-src 'none'; 
-  media-src 'self'; 
-  prefetch-src 'self'; 
-  connect-src 'self'; 
-  font-src 'self' 'unsafe-inline' https://fonts.gstatic.com; 
-  img-src 'self' data: https://www.gravatar.com https://storage.googleapis.com; 
-  script-src 'self'; 
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/;
-  frame-src 'self';
-`;
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { createSecureHeaders } = require('next-secure-headers');
 
-const securityHeaders = [
-  {
-    key: 'Strict-Transport-Security',
-    value: 'max-age=31536000; includeSubDomains; preload'
-  },
-  {
-    key: 'X-XSS-Protection',
-    value: '1; mode=block'
-  },
-  {
-    key: 'X-Frame-Options',
-    value: 'SAMEORIGIN'
-  },
-  {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff'
-  },
-  {
-    key: 'Referrer-Policy',
-    value: 'same-origin'
-  },
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
-  }
-];
-
-// @type {import('next').NextConfig}
-const nextConfig = {
-  reactStrictMode: true,
-  webpack(config) {
+module.exports = {
+  webpack(config ) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack']
@@ -63,17 +25,15 @@ const nextConfig = {
 
     return config;
   },
-  async headers() {
-    return process.env.APP_ENV === 'development' ? [] : [
-      {
-        // Apply these headers to all routes in your application.
-        source: '/:path*',
-        headers: securityHeaders,
-      },
-    ]
+  i18n: {
+    locales: ['nl'],
+    defaultLocale: 'nl'
   },
+  reactStrictMode: true,
   images: {
-    domains: ['images.pexels.com', 'images.unsplash.com', 'images.ctfassets.net', 'd21buns5ku92am.cloudfront.net']
+    domains: [
+
+    ]
   },
   i18n: {
     locales: ['nl-NL', 'en-US'],
@@ -86,4 +46,49 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig;
+  async headers() {
+    if (process.env.NODE_ENV !== 'development') {
+      const whitelistedDomains = [
+        'self', // always allow from same domain
+        '*.googleapis.com', // for fonts and assets
+        '*.gstatic.com', // google cdn
+      ];
+
+      return [
+        {
+          source: '/(.*)',
+          headers: createSecureHeaders({
+            contentSecurityPolicy: {
+              directives: {
+                defaultSrc: "'self'",
+                frameAncestors: "'self'",
+                mediaSrc: ['self'],  // for <audio> and <video>
+                connectSrc: whitelistedDomains,
+                frameSrc: whitelistedDomains,
+                scriptSrc: [
+                  "'unsafe-inline'", // used for GTM dataLayer
+                  ...whitelistedDomains
+                ],
+                styleSrc: [
+                  "'unsafe-inline'", // for <style> tags in <head>
+                  ...whitelistedDomains
+                ],
+                fontSrc: [
+                  'data:',
+                  ...whitelistedDomains
+                ],
+                imgSrc: [
+                  'data:', // for <svg> and other base64 encoded images
+                  ...whitelistedDomains
+                ]
+              }
+            },
+            forceHTTPSRedirect: [true, { maxAge: 60 * 60 * 24 * 4, includeSubDomains: true }],
+            referrerPolicy: 'same-origin'
+          })
+        }
+      ];
+    }
+    return [];
+  }
+};
