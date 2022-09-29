@@ -78,7 +78,12 @@ const nextConfig = {
   i18n: {
     locales: ['nl-NL', 'en-US'],
     defaultLocale: 'nl-NL',
-  }
+  },
+
+  // Enables scroll restoration when you go back to previous page
+  experimental: {
+    scrollRestoration: true
+  },
 }
 
 module.exports = nextConfig;
