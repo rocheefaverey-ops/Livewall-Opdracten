@@ -2,7 +2,7 @@
 const { createSecureHeaders } = require('next-secure-headers');
 
 module.exports = {
-  webpack(config ) {
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack']
@@ -30,14 +30,9 @@ module.exports = {
     defaultLocale: 'nl'
   },
   reactStrictMode: true,
-  images: {
-    domains: [
 
-    ]
-  },
-  i18n: {
-    locales: ['nl-NL', 'en-US'],
-    defaultLocale: 'nl-NL',
+  images: {
+    domains: ['c.tenor.com']
   },
   async headers() {
     if (process.env.NODE_ENV !== 'development') {
