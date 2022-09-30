@@ -21,6 +21,8 @@
     ]
   },
   "dependencies": {
+    "@google-cloud/error-reporting": "^3.0.3",
+    "@google-cloud/logging-winston": "^5.1.5",
     "@tailwindcss/line-clamp": "^0.4.2",
     "classnames": "^2.3.1",
     "next": "^12.3.1",
@@ -31,7 +33,8 @@
     "react-dom": "18.2.0",
     "react-google-recaptcha": "^2.1.0",
     "react-map-interaction": "^2.1.0",
-    "sharp": "^0.31.0"
+    "sharp": "^0.31.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/node": "^18.7.23",
