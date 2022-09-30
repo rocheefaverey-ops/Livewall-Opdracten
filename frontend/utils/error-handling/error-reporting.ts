@@ -37,7 +37,7 @@ export default class ErrorReporting {
     }
   }
 
-  public static reportAny(err: Error, req?: Request | NextApiRequest) {
+  public static reportAny(err: unknown, req?: Request | NextApiRequest) {
     if (err instanceof Error) {
       // Report the error
       this.report(err, req);

@@ -7,4 +7,4 @@ export { default as ErrorReporting } from './error-handling/error-reporting';
 export { default as useWindowDimensions } from './hooks/use-window-dimensions';
 
 // Helper functions
-export * from './helpers/url-helpers';
+export * from './helpers/capitalize';
