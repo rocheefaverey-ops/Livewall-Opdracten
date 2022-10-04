@@ -1,10 +1,7 @@
 module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   corePlugins: {
-    aspectRatio: false,
+    aspectRatio: false
   },
   theme: {
     extend: {
@@ -12,9 +9,10 @@ module.exports = {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
         tertiary: 'var(--color-tertiary)',
+        statusRed: 'var(--color-statusRed)'
       },
       fontFamily: {
-        default: "Open Sans, sans-serif",
+        default: 'Open Sans, sans-serif'
       }
     },
     spacing: {
@@ -36,8 +34,8 @@ module.exports = {
       10: '72px',
       11: '80px',
       12: '96px',
-      14: '128px',
-    },
+      14: '128px'
+    }
   },
   safelist: [],
   plugins: [
@@ -50,9 +48,9 @@ module.exports = {
       matchUtilities(
         // https://gist.github.com/olets/9b833a33d01384eed1e9f1e106003a3b
         {
-          'aspect': (value) => ({
+          aspect: (value) => ({
             '@supports (aspect-ratio: 1 / 1)': {
-              aspectRatio: value,
+              aspectRatio: value
             },
             '@supports not (aspect-ratio: 1 / 1)': {
               // https://github.com/takamoso/postcss-aspect-ratio-polyfill
@@ -60,18 +58,18 @@ module.exports = {
               '&::before': {
                 content: '""',
                 float: 'left',
-                paddingTop: `calc(100% / (${value}))`,
+                paddingTop: `calc(100% / (${value}))`
               },
               '&::after': {
                 clear: 'left',
                 content: '""',
-                display: 'block',
+                display: 'block'
               }
-            },
-          }),
+            }
+          })
         },
         { values: theme('aspectRatio') }
-      )
-    },
+      );
+    }
   ]
-}
+};
