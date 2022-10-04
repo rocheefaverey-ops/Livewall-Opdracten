@@ -4,7 +4,7 @@ export { default as ErrorBoundary } from './error-handling/error-boundry';
 export { default as ErrorReporting } from './error-handling/error-reporting';
 
 // Hooks
-export { default as useWindowDimensions } from './hooks/use-window-dimensions';
+export { default as useWindowDimensions } from './hooks/use-window-dimensions.hook';
 
 // Helper functions
-export * from './helpers/capitalize';
+export * from './helpers/capitalize.helper';
