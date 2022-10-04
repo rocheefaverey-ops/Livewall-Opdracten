@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { createSecureHeaders } = require('next-secure-headers');
+const { i18n } = require('./next-i18next.config');
 
 module.exports = {
   webpack(config) {
@@ -25,10 +26,7 @@ module.exports = {
 
     return config;
   },
-  i18n: {
-    locales: ['nl'],
-    defaultLocale: 'nl'
-  },
+  i18n,
   reactStrictMode: true,
 
   images: {
@@ -39,7 +37,7 @@ module.exports = {
       const whitelistedDomains = [
         'self', // always allow from same domain
         '*.googleapis.com', // for fonts and assets
-        '*.gstatic.com', // google cdn
+        '*.gstatic.com' // google cdn
       ];
 
       return [
@@ -50,21 +48,12 @@ module.exports = {
               directives: {
                 defaultSrc: "'self'",
                 frameAncestors: "'self'",
-                mediaSrc: ['self'],  // for <audio> and <video>
+                mediaSrc: ['self'], // for <audio> and <video>
                 connectSrc: whitelistedDomains,
                 frameSrc: whitelistedDomains,
-                scriptSrc: [
-                  "'unsafe-inline'", // used for GTM dataLayer
-                  ...whitelistedDomains
-                ],
-                styleSrc: [
-                  "'unsafe-inline'", // for <style> tags in <head>
-                  ...whitelistedDomains
-                ],
-                fontSrc: [
-                  'data:',
-                  ...whitelistedDomains
-                ],
+                scriptSrc: [...whitelistedDomains],
+                styleSrc: [...whitelistedDomains],
+                fontSrc: ['data:', ...whitelistedDomains],
                 imgSrc: [
                   'data:', // for <svg> and other base64 encoded images
                   ...whitelistedDomains
@@ -83,5 +72,5 @@ module.exports = {
   // Enables scroll restoration when you go back to previous page
   experimental: {
     scrollRestoration: true
-  },
-}
+  }
+};
