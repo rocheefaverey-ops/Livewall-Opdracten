@@ -15,6 +15,7 @@ const getExceptionStack = (exception: unknown) => (isError(exception) ? exceptio
  * This is used for the APIs to handle exceptions and http status codes
  * @param handler
  * @param method
+ * @param encrypted
  */
 const withExceptionHandler =
   <T>(handler: ApiHandler<T>, method: ApiMethod, encrypted?: boolean) =>
