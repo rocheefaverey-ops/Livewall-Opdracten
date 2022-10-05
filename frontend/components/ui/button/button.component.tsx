@@ -16,7 +16,7 @@ type Props = {
 type Type = 'primary' | 'secondary' | 'tertiary';
 type ButtonElementType = 'button' | 'submit' | 'reset';
 
-const Button: React.FC<Props> = ({ children, target, type, ctaLink = '/', buttonElementType = 'button', className = '', gtm = '0', onClick }) => {
+const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink = '/', buttonElementType = 'button', className = '', onClick }) => {
   let btnType;
   switch (type) {
     case 'secondary':

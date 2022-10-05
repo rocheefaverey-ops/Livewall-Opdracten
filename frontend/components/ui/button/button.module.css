@@ -12,7 +12,7 @@
 }
 
 .btn--secondary {
-  @apply btn py-1.5 px-2 bg-greyLight02 text-primary border-primary border;
+  @apply btn py-1.5 px-2 bg-tertiary text-primary border-primary border;
 }
 
 .btn--tertiary {
