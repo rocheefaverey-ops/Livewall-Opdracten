@@ -1,0 +1,21 @@
+/* .btn is the main class for each button. All other versions have the 'btn' class in it. This means it will inherit the styles from .btn */
+.btn {
+  @apply font-bold rounded transition-opacity inline-flex cursor-pointer w-fit;
+}
+
+.btn:hover {
+  @apply opacity-60;
+}
+
+.btn--primary {
+  @apply btn py-1.5 px-2 !bg-primary text-tertiary;
+}
+
+.btn--secondary {
+  @apply btn py-1.5 px-2 bg-greyLight02 text-primary border-primary border;
+}
+
+.btn--tertiary {
+  @apply btn p-0 text-primary;
+}
+
