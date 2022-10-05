@@ -19,26 +19,14 @@ export const typeMapping = {
   span: 'span',
   ul: 'ul',
   ol: 'ol',
-  p: 'p',
-  small: 'p',
-  label: 'p',
-  'label-big': 'p',
-  'intro-line': 'p',
-  'extra-info': 'p',
-  'call-to-action': 'p'
+  p: 'p'
 };
 
 const Typography: React.FC<Props> = ({ children, type = 'p', color = '', className = '', ...props }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomTag = (typeMapping[type] ?? 'p') as any;
 
-  const styling = classNames(
-    { small: type === 'small' },
-    { label: type === 'label' },
-    { 'call-to-action': type === 'call-to-action' },
-    { [`!${color}`]: color },
-    className
-  );
+  const styling = classNames({ [`!${color}`]: color }, className);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
