@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "cd .. && husky install frontend/.husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
@@ -42,6 +43,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^12.3.1",
     "@types/luxon": "^3.0.1",
     "@types/node": "^18.7.23",
     "@types/react": "^18.0.21",
@@ -50,6 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "autoprefixer": "^10.4.4",
+    "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",

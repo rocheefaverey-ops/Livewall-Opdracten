@@ -1,8 +1,10 @@
+/* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { createSecureHeaders } = require('next-secure-headers');
 const { i18n } = require('./next-i18next.config');
 
-module.exports = {
+
+let nextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -74,3 +76,15 @@ module.exports = {
     scrollRestoration: true
   }
 };
+
+// Check if ANALYZE env is set en if true start bundle-analyzer
+const analyzeBundles = process.env.ANALYZE;
+
+if (analyzeBundles) {
+  const withNextBundleAnalyzer =
+    // eslint-disable-next-line import/no-extraneous-dependencies
+    require('@next/bundle-analyzer')();
+  nextConfig = withNextBundleAnalyzer(nextConfig);
+}
+
+module.exports = nextConfig;
