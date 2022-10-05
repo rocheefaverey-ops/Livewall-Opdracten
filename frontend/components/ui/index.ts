@@ -1,11 +1,12 @@
 // Generic UI
-import Typography from './typography/typography.component';
+import Button from './button/button.component';
 import Container from './container/container.component';
+import Typography from './typography/typography.component';
 
 // Inputs
-import InputHolder from './inputs/components/input-holder/input-holder.component';
-import TextInput from './inputs/text-input/text-input.component';
 import DateInput from './inputs/date-input/date-input.component';
 import DropdownInput from './inputs/dropdown-input/dropdown-input.component';
+import InputHolder from './inputs/components/input-holder/input-holder.component';
+import TextInput from './inputs/text-input/text-input.component';
 
-export { Typography, Container, TextInput, InputHolder, DropdownInput, DateInput };
+export { Button, Container, Typography, DateInput, DropdownInput, InputHolder, TextInput };
