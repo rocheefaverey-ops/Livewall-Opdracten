@@ -1,8 +1,48 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { createSecureHeaders } = require('next-secure-headers');
+const crypto = require('crypto');
 const { i18n } = require('./next-i18next.config');
 
+const allowedNonce = crypto.randomBytes(16).toString('base64');
+
+const ContentSecurityPolicy = `
+  default-src 'none'; 
+  media-src 'self'; 
+  prefetch-src 'self'; 
+  connect-src 'self' region1.google-analytics.com *.google-analytics.com *.googleadservices.com *.google.com *.google.nl googleads.g.doubleclick.net consentcdn.cookiebot.com *.googlesyndication.com stats.g.doubleclick.net; 
+  font-src 'self' 'unsafe-inline' 'data:' fonts.gstatic.com *.google.com *.google.nl; 
+  img-src 'self' 'data:'; 
+  script-src 'self' gstatic.com *.googletagmanager.com *.google.com *.google.nl gstatic.com consent.cookiebot.com *.googleoptimize.com *.google-analytics.com *.googleadservices.com googleads.g.doubleclick.net consentcdn.cookiebot.com *.facebook.com https://www.gstatic.com stats.g.doubleclick.net; 
+  style-src 'self' 'unsafe-inline' fonts.googleapis.com *.google.com *.google.nl; 
+  frame-src 'self' *.youtube-nocookie.com *.google.com *.google.nl consent.cookiebot.com *.google-analytics.com *.google.com *.google.nl consentcdn.cookiebot.com; 
+`;
+
+const securityHeaders = [
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=31536000; includeSubDomains; preload'
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block'
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN'
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff'
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'strict-origin-when-cross-origin'
+  },
+  {
+    key: 'Content-Security-Policy',
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
+  }
+];
 
 let nextConfig = {
   webpack(config) {
@@ -34,41 +74,17 @@ let nextConfig = {
   images: {
     domains: ['c.tenor.com']
   },
-  async headers() {
-    if (process.env.NODE_ENV !== 'development') {
-      const whitelistedDomains = [
-        'self', // always allow from same domain
-        '*.googleapis.com', // for fonts and assets
-        '*.gstatic.com' // google cdn
-      ];
 
-      return [
-        {
-          source: '/(.*)',
-          headers: createSecureHeaders({
-            contentSecurityPolicy: {
-              directives: {
-                defaultSrc: "'self'",
-                frameAncestors: "'self'",
-                mediaSrc: ['self'], // for <audio> and <video>
-                connectSrc: whitelistedDomains,
-                frameSrc: whitelistedDomains,
-                scriptSrc: [...whitelistedDomains],
-                styleSrc: [...whitelistedDomains],
-                fontSrc: ['data:', ...whitelistedDomains],
-                imgSrc: [
-                  'data:', // for <svg> and other base64 encoded images
-                  ...whitelistedDomains
-                ]
-              }
-            },
-            forceHTTPSRedirect: [true, { maxAge: 60 * 60 * 24 * 4, includeSubDomains: true }],
-            referrerPolicy: 'same-origin'
-          })
-        }
-      ];
-    }
-    return [];
+  async headers() {
+    return process.env.APP_ENV === 'development'
+      ? []
+      : [
+          {
+            // Apply these headers to all routes in your application.
+            source: '/:path*',
+            headers: securityHeaders
+          }
+        ];
   },
 
   // Enables scroll restoration when you go back to previous page
@@ -87,4 +103,4 @@ if (analyzeBundles) {
   nextConfig = withNextBundleAnalyzer(nextConfig);
 }
 
-module.exports = nextConfig;
+module.exports = { ...nextConfig, allowedNonce };
