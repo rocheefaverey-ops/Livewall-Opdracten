@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AppProps } from 'next/app';
 import { AppStateProvider } from 'app-state';
 import NextProgress from 'next-progress';
+import { appWithTranslation } from 'next-i18next';
 import { applyTheme } from 'themes/utils/theme';
 import { PageLayout } from '../components/layout';
 import '../styles/globals.css';
@@ -24,4 +25,4 @@ function App({ Component, pageProps }: AppProps) {
   );
 }
 
-export default App;
+export default appWithTranslation(App);
