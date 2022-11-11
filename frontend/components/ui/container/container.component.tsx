@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react';
+import classes from './container.module.css';
 
 type Props = {
   children: ReactNode;
   className?: string;
 };
 
-const Container: React.FC<Props> = ({ children, className = '' }) => <div className={`max-w-[1200px] w-full mx-auto my-0 ${className}`}>{children}</div>;
+const Container: React.FC<Props> = ({ children, className = '' }) => <div className={`${classes.container} ${className}`}>{children}</div>;
 
 export default Container;
