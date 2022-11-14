@@ -9,7 +9,8 @@ import Typography from './typography/typography.component';
 // Inputs
 import DateInput from './inputs/date-input/date-input.component';
 import DropdownInput from './inputs/dropdown-input/dropdown-input.component';
+import FileInput from './inputs/file-input/file-input.component';
 import InputHolder from './inputs/components/input-holder/input-holder.component';
 import TextInput from './inputs/text-input/text-input.component';
 
-export { Breadcrumbs, Button, Container, LoadingIndicator, Modal, Typography, DateInput, DropdownInput, InputHolder, TextInput };
+export { Breadcrumbs, Button, Container, LoadingIndicator, Modal, Typography, DateInput, DropdownInput, FileInput, InputHolder, TextInput };
