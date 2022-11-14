@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import ErrorText from '../components/error-text/error-text.component';
 
 type Props = {
+  buttonText?: string;
   acceptedTypes?: string;
   children?: ReactNode;
   error?: boolean;
@@ -12,7 +13,7 @@ type Props = {
   handleFileUpload: (files: FileList) => void;
 };
 
-const TextInput: React.FC<Props> = ({ children, error = false, errorText, className = '', acceptedTypes = '*', handleFileUpload }) => {
+const FileInput: React.FC<Props> = ({ children, error = false, errorText, buttonText = 'Upload', acceptedTypes = '*', className = '', handleFileUpload }) => {
   const onFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
     handleFileUpload(event.target.files);
@@ -25,7 +26,7 @@ const TextInput: React.FC<Props> = ({ children, error = false, errorText, classN
       <label htmlFor="file-upload" className={styling}>
         {children || (
           <Button type="secondary" className="py-1 pointer-events-none" buttonElementType="submit">
-            Upload
+            {buttonText}
           </Button>
         )}
       </label>
@@ -35,4 +36,4 @@ const TextInput: React.FC<Props> = ({ children, error = false, errorText, classN
   );
 };
 
-export default TextInput;
+export default FileInput;
