@@ -1,0 +1,11 @@
+.collapse {
+  @apply transition hover:shadow-mediumHovered h-auto border border-blue08 px-2 md:px-3 py-2 md:py-3;
+}
+  
+.collapse__title {
+  @apply cursor-pointer;
+}
+
+.collapse__detail {
+  @apply overflow-hidden transition-all ease-in-out duration-[0.5s];
+}

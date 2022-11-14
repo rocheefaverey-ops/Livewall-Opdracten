@@ -5,8 +5,13 @@ import classes from './card.module.css';
 type Props = {
   children: ReactNode;
   className?: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-const Card: React.FC<Props> = ({ children, className = '' }) => <div className={classNames(classes.card, className)}>{children}</div>;
+const Card: React.FC<Props> = ({ children, className = '', onClick }) => (
+  <div className={classNames(classes.card, className)} onClick={onClick}>
+    {children}
+  </div>
+);
 
 export default Card;
