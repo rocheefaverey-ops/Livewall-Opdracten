@@ -32,7 +32,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     // You can use your own error logging service here
     const { router } = this.props;
     // eslint-disable-next-line no-console
-    console.warn('Caught error => ', error, 'Error message => ', errorInfo, 'Loaction => ', router.asPath);
+    console.warn('Caught error => ', error, 'Error message => ', errorInfo, 'Location => ', router.asPath);
   }
 
   render() {
