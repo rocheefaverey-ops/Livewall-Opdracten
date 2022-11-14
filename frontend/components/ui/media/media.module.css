@@ -1,0 +1,12 @@
+.media{
+    &-container {
+        @apply relative h-auto;
+    }
+    &-caption {
+        @apply h-[15%] border-l border-solid px-2 py-3 md:px-3 border-greyMed01 flex text-center;
+    }
+}
+
+.media-caption p{
+    @apply mb-0
+}
