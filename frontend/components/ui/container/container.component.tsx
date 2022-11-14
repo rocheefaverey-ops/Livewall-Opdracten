@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import classNames from 'classnames';
 import classes from './container.module.css';
 
 type Props = {
@@ -6,6 +7,6 @@ type Props = {
   className?: string;
 };
 
-const Container: React.FC<Props> = ({ children, className = '' }) => <div className={`${classes.container} ${className}`}>{children}</div>;
+const Container: React.FC<Props> = ({ children, className = '' }) => <div className={classNames(classes.container, className)}>{children}</div>;
 
 export default Container;

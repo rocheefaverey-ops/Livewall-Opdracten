@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Modal: React.FC<Props> = ({ showModal, children }) => {
-  const dialog = useRef<HTMLDialogElement>();
+  const dialog = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     if (!dialog.current) return;

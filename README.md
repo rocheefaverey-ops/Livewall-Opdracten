@@ -7,12 +7,23 @@ You can find the most recent version of this guide [here](https://github.com/ver
 
 ## Table of Contents
 
+- [Quick start](#quick-start)
 - [Folder Structure](#folder-structure)
 - [Creating-new-Components](#Creating-new-components)
   - [Basic folder setup](#basic-folder-setup)
   - [Adding a Stylesheet](#adding-a-stylesheet)
   - [Code Splitting](#code-splitting)
 - [Available Scripts](#available-scripts)
+
+
+## Quick start
+
+1.  Make sure that you have at minimum Node.js v12.22.0 and npm v6 or above installed.
+2.  Copy the contents of env.example over to an local .env file and fill in all needed values.
+3.  Run `npm install` in order to install dependencies.<br />
+    _At this point you can run `npm run dev` to see the example app at `http://localhost:3000`._
+
+Now you're ready to go!
 
 
 ## Folder Structure

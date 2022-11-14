@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from 'react';
+import classNames from 'classnames';
 import classes from './card.module.css';
 
 type Props = {
@@ -7,6 +7,6 @@ type Props = {
   className?: string;
 };
 
-const Card: React.FC<Props> = ({ children, className = '' }) => <div className={`${classes.card} ${className}`}>{children}</div>;
+const Card: React.FC<Props> = ({ children, className = '' }) => <div className={classNames(classes.card, className)}>{children}</div>;
 
 export default Card;

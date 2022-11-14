@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
+import classNames from 'classnames';
 import classes from './button.module.css';
 
 type Props = {
@@ -33,13 +34,13 @@ const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink = '/', b
 
   return ctaLink ? (
     <Link href={ctaLink} target={target || targetLink} passHref>
-      <a className={`${btnType} ${className}`} id={gtm}>
+      <a className={classNames(btnType, className)} id={gtm}>
         {children}
       </a>
     </Link>
   ) : (
     // eslint-disable-next-line react/button-has-type
-    <button className={`${classes.btn} ${btnType} ${className}`} type={buttonElementType} onClick={onClick}>
+    <button className={classNames(classes.btn, btnType, className)} type={buttonElementType} onClick={onClick}>
       {children}
     </button>
   );
