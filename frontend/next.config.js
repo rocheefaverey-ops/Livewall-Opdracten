@@ -7,14 +7,15 @@ const allowedNonce = crypto.randomBytes(16).toString('base64');
 
 const ContentSecurityPolicy = `
   default-src 'none'; 
+  frame-ancestors 'none'; 
+  frame-src https://consentcdn.cookiebot.com; 
   media-src 'self'; 
-  prefetch-src 'self'; 
-  connect-src 'self' region1.google-analytics.com *.google-analytics.com *.googleadservices.com *.google.com *.google.nl googleads.g.doubleclick.net consentcdn.cookiebot.com *.googlesyndication.com stats.g.doubleclick.net; 
-  font-src 'self' 'unsafe-inline' 'data:' fonts.gstatic.com *.google.com *.google.nl; 
-  img-src 'self' 'data:'; 
-  script-src 'self' gstatic.com *.googletagmanager.com *.google.com *.google.nl gstatic.com consent.cookiebot.com *.googleoptimize.com *.google-analytics.com *.googleadservices.com googleads.g.doubleclick.net consentcdn.cookiebot.com *.facebook.com https://www.gstatic.com stats.g.doubleclick.net; 
-  style-src 'self' 'unsafe-inline' fonts.googleapis.com *.google.com *.google.nl; 
-  frame-src 'self' *.youtube-nocookie.com *.google.com *.google.nl consent.cookiebot.com *.google-analytics.com *.google.com *.google.nl consentcdn.cookiebot.com; 
+  prefetch-src 'self';
+  connect-src 'self' https://www.google-analytics.com; 
+  font-src 'self' 'unsafe-inline' data: https://use.typekit.net https://fonts.gstatic.com; 
+  img-src 'self' data: blob:; 
+  script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net/en_US/fbevents.js https://consent.cookiebot.com https://consentcdn.cookiebot.com; 
+  style-src 'self' 'unsafe-inline' https://p.typekit.net https://use.typekit.net;
 `;
 
 const securityHeaders = [
