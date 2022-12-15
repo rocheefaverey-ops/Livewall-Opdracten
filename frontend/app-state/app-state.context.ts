@@ -12,6 +12,6 @@ export const defaultAppState = {
   setAppState: (_appState: DefaultAppState): void => {}
 };
 
-const AppstateContext = createContext(defaultAppState);
+const AppStateContext = createContext(defaultAppState);
 
-export default AppstateContext;
+export default AppStateContext;
