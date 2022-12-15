@@ -3,7 +3,7 @@ import { AppProps } from 'next/app';
 import { AppStateProvider } from 'app-state';
 import NextProgress from 'next-progress';
 import { appWithTranslation } from 'next-i18next';
-import { ErrorBoundary } from '@utils/index';
+import ErrorBoundary from '@utils/error-handling/error-boundry';
 import { applyTheme } from 'themes/utils/theme';
 import { PageLayout } from '../components/layout';
 import '../styles/globals.css';

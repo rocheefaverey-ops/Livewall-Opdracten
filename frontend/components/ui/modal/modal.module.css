@@ -1,4 +1,4 @@
 .modal {
-	@apply bg-white p-6 border border-greyMed02 rounded-md;
+	@apply bg-white p-6 border border rounded-md;
  }
  
