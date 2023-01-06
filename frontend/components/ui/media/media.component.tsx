@@ -82,17 +82,16 @@ const Media: React.FC<Props> = ({
 
         return (
           <Image
-            layout="fill"
+            fill
             priority={priority}
             quality={100}
             blurDataURL={media.blurUpThumb}
             placeholder={media.blurUpThumb ? 'blur' : 'empty'}
-            objectPosition="left"
-            objectFit={portrait ? 'contain' : objectFit}
             className={title ? 'opacity-80' : ''}
             src={url}
             alt={media.alt ?? media.title ?? alt ?? media.id}
             onClick={() => setToggler(!toggler)}
+            style={{ objectPosition: 'left', objectFit: portrait ? 'contain' : objectFit }}
           />
         );
     }

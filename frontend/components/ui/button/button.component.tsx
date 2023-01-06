@@ -33,10 +33,8 @@ const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink = '/', b
   const targetLink = ctaLink.match(/^(https?:\/\/)/) ? '_blank' : '_self';
 
   return ctaLink ? (
-    <Link href={ctaLink} target={target || targetLink} passHref>
-      <a className={classNames(btnType, className)} id={gtm}>
-        {children}
-      </a>
+    <Link href={ctaLink} target={target || targetLink} passHref id={gtm} className={classNames(btnType, className)}>
+      {children}
     </Link>
   ) : (
     // eslint-disable-next-line react/button-has-type

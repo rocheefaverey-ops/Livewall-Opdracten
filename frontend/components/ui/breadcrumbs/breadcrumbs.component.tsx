@@ -25,8 +25,8 @@ const Breadcrumbs: React.FC<Props> = ({ items, className = '' }) => (
             <div className={classNames(classes.breadcrumbs__item, classes['breadcrumb__item--current'])}>{name}</div>
           ) : (
             <>
-              <Link href={link}>
-                <a className={classes.breadcrumbs__item}>{name}</a>
+              <Link href={link} className={classes.breadcrumbs__item}>
+                {name}
               </Link>
               <div className={classes.breadcrumbs__item}>{`>`}</div>
             </>
