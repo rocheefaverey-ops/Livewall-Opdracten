@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { Breadcrumbs, Button, Container } from '@components/ui';
+import { Container } from '@components/ui';
 import { withPageLayoutData } from '@utils/index';
 import { useTranslation } from 'next-i18next';
 
@@ -21,15 +21,6 @@ const Home: NextPage = () => {
         </div>
         <div className="mx-auto w-fit">
           <Image width={647} height={647} src="https://c.tenor.com/2w1XsfvQD5kAAAAC/hhgf.gif" alt="excited" />
-          <Button className="mt-1" ctaLink="/" type="secondary">
-            Testlinkje
-          </Button>
-          <Breadcrumbs
-            items={[
-              { id: '', link: 'asafsfs', name: 'asfasfa' },
-              { id: 'asfsaf', link: 'asaasdfsfs', name: 'asfasfa' }
-            ]}
-          />
         </div>
       </Container>
     </div>
