@@ -14,7 +14,7 @@ const ContentSecurityPolicy = `
   connect-src 'self' https://www.google-analytics.com https://consentcdn.cookiebot.com; 
   font-src 'self' 'unsafe-inline' data: https://use.typekit.net https://fonts.gstatic.com; 
   img-src 'self' data: blob:; 
-  script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net/en_US/fbevents.js https://consent.cookiebot.com https://consentcdn.cookiebot.com https://googleads.g.doubleclick.net; 
+  script-src 'self' 'nonce-${allowedNonce}' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net/en_US/fbevents.js https://consent.cookiebot.com https://consentcdn.cookiebot.com https://googleads.g.doubleclick.net; 
   style-src 'self' 'unsafe-inline' https://p.typekit.net https://use.typekit.net;
 `;
 
