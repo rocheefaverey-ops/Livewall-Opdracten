@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "cd .. && husky install frontend/.husky",
+    "prepare":"cd .. && node -e \"if (process.env.NODE_ENV === 'development'){process.exit(1)} \" || husky install frontend/.husky",
     "lint-staged": "lint-staged",
     "analyze": "cross-env ANALYZE=true next build"
   },
