@@ -69,19 +69,19 @@ let nextConfig = {
   reactStrictMode: true,
 
   images: {
-    domains: ['c.tenor.com']
+    domains: []
   },
 
   async headers() {
     return process.env.APP_ENV === 'development'
       ? []
       : [
-          {
-            // Apply these headers to all routes in your application.
-            source: '/:path*',
-            headers: securityHeaders
-          }
-        ];
+        {
+          // Apply these headers to all routes in your application.
+          source: '/:path*',
+          headers: securityHeaders
+        }
+      ];
   },
 
   // Enables scroll restoration when you go back to previous page
