@@ -39,9 +39,6 @@ module.exports = {
   },
   safelist: [],
   plugins: [
-    // eslint-disable-next-line global-require
-    require('@tailwindcss/line-clamp'),
-
     // Aspect ratio safari fallback
     ({ matchUtilities, theme /* … */ }) => {
       // …
