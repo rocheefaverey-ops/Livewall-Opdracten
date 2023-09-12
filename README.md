@@ -19,7 +19,7 @@ You can find the most recent version of this guide [here](https://github.com/ver
 ## Quick start
 
 1.  Make sure that you have at minimum Node.js v12.22.0 and npm v6 or above installed.
-2.  Inside the frontend folder copy the contents of env.example over to an local .env file and fill in all needed values.
+2.  Inside the frontend folder copy the contents of env.example over to an local .env file and fill in all needed values, APP_ENV is important here.
 3.  Move the terminal to the appropriate folder: `cd frontend`.
 4.  Run `npm install` in order to install dependencies.<br />
     _At this point you can run `npm run dev` to see the example app at `http://localhost:3000`._
