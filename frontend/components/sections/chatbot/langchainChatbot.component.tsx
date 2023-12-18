@@ -182,9 +182,8 @@ const LangchainChatbot = () => {
                   </div>
                 )}
                 <div
-                  className={`${messageClasses[entry.type]} rounded-md px-2 py-1 max-w-[70%] text-${
-                    entry.type === 'user' ? 'right bg-black' : 'left bg-[#f7f4f4]'
-                  }`}
+                  className={`${messageClasses[entry.type]} rounded-md px-2 py-1 max-w-[70%] text-${entry.type === 'user' ? 'right bg-black' : 'left bg-[#f7f4f4]'
+                    }`}
                 >
                   <span className="font-bold">{entry.type === 'user' ? 'Jij' : 'Aart '}</span>
                   <br />
@@ -198,7 +197,7 @@ const LangchainChatbot = () => {
                           hour12: false // To force 24-hour time format
                         })}
                     </h1>
-                  </div>  
+                  </div>
                 </div>
               </div>
             ))}

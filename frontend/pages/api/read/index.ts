@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         environment: process.env.PINECONE_ENVIRONMENT || '',
     });
 
-    const text = await queryPineconeVectorStoreAndQueryLLM(client, indexName, body, );
+    const text = await queryPineconeVectorStoreAndQueryLLM(client, indexName, body,);
 
     res.status(200).json({ data: text });
 }
