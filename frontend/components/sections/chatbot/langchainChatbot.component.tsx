@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TypingAnimation from '../../ui/typingAnimation.component';
-import { Aart, Chat, Info } from './images';
+import { Aart, Chat } from './images';
 
 type ChatEntry = {
   message: string;
@@ -19,11 +19,6 @@ const LangchainChatbot = () => {
     initializeChatLog();
   }, []);
 
-  //! If you want to convert another .pdf, .txt or .md file into vectors and- 
-  //! store them in the currently selected vector database execute this function (createIndexAndEmbeddings).
-
-  //! One file at a time, after creating the embeddings you need to remove the file from-
-  //! the documents folder.
   async function createIndexAndEmbeddings() {
     try {
       const result = await fetch('/api/setup', {
@@ -39,7 +34,6 @@ const LangchainChatbot = () => {
   const initializeChatLog = () => {
     const initialMessages: ChatEntry[] = [
       {
-        // Customize the initial bot message for different clients
         message: 'Hallo! Mijn naam is Aart. Hoe kan ik je helpen met vragen betreffende onze onderneming?',
         type: 'bot',
         time: Date.now() // Add the current timestamp
@@ -51,7 +45,6 @@ const LangchainChatbot = () => {
   const messageClasses: {
     [key: string]: string;
   } = {
-    // Styles for different types of messages (user and bot) can be customized
     user: 'text-white bg-[#333333] font-regular ml-[30vw] md:ml-[20px]',
     bot: 'text-black-600 bg-[#f7f4f4] mr-[30vw] md:mr-[20px]'
   };
@@ -81,7 +74,7 @@ const LangchainChatbot = () => {
 
     try {
       const defaultContext =
-        'Je bent een vriendelijke AI-assistent die de website bezoeker helpt met informatie betreffende Aartsen. Aartsen is het bedrijf waar je voor werkt. Je krijgt alle kennis die je nodig hebt via een database. Als de informatie die je zoekt daar niet instaat vermeld je aan de gebruiker dat deze informatie helaas niet ter beschikking is. Je vraagt altijd of je de gebruiker verder nog kan helpen na een antwoord. Bij vraag naar onze certificering geef je altijd het bio certificaat nummer. Als de gebruiker vraagt naar contact informatie geef je ALTIJD HET TELEFOONNUMMER EN E-MAIL!!!!';
+        'Je bent een vriendelijke AI-assistent die de website bezoeker helpt met informatie betreffende Aartsen. Aartsen is het bedrijf waar je voor werkt. Je krijgt alle kennis die je nodig hebt via een database. Als de gebruiker vraagt naar contact of contact informatie geef je altijd het telefoonnummer en e-mail. Als de informatie die je zoekt daar niet instaat vermeld je aan de gebruiker dat deze informatie helaas niet ter beschikking is. Als iemand een bedankje stuurt zeg je netjes graag gedaan. Bij vraag naar onze certificering geef je altijd het bio certificaat nummer';
       const conversationContext = chatLog.map((entry) => entry.message).join(' ');
       const requestData = {
         context: conversationContext,
@@ -160,57 +153,19 @@ const LangchainChatbot = () => {
     scrollToBottom();
   }, [chatLog]);
 
-  const [showPopup, setShowPopup] = useState(false);
-
-  const togglePopup = () => {
-    setShowPopup(!showPopup);
-  };
-
-  const renderMessage = (message: string) => {
-    // Regex patterns for phone numbers and emails can be adjusted if needed
-    const phoneRegex = /(\+\d{1,2}\s?)?\(?\d{1,3}\)?[\s.-]?\(?\d{1,3}\)?[\s.-]?\d{1,3}[\s.-]?\d{2}[\s.-]?\d{2,3}/g; // Regex for phone numbers
-    const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g; // Regex for emails
-  
-    let formattedMessage = message;
-  
-    // Replace phone numbers with clickable links and underline them
-    formattedMessage = formattedMessage.replace(phoneRegex, (match) => {
-      return `<a href="tel:${match}" style="text-decoration: underline; color: blue;">${match}</a>`;
-    });
-    
-    // Replace emails with clickable links and underline them
-    formattedMessage = formattedMessage.replace(emailRegex, (match) => {
-      return `<a href="mailto:${match}" style="text-decoration: underline; color: blue;">${match}</a>`;
-    });
-  
-    // Return the formatted message as HTML
-    return <div dangerouslySetInnerHTML={{ __html: formattedMessage }} />;
-  };
-
-
   return (
     <div style={{ position: 'relative' }}>
       {!showChatbot && (
-        <button className="fixed p-2 z-50 right-4 bottom-4 bg-[#000000] text-white rounded-full cursor-pointer hover:bg-red-600" onClick={toggleChatbot}>
+        <button className="fixed p-2 z-50 right-4 bottom-4 bg-[#000000] text-white rounded-full cursor-pointer hover:bg-primary" onClick={toggleChatbot}>
           <Chat />
         </button>
       )}
 
       {showChatbot && (
         <div className="fixed md:right-4 md:bottom-4 right-0 bottom-0 md:max-w-[500px] md:max-h-[600px] lg:max-h-[600px] lg:max-w-[400px] w-full h-full bg-white z-50 flex flex-col rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-          <div className="py-2 flex flex-row justify-between px-4 border-b-2 items-center">
-            <div>
-              <div className='hover:cursor-pointer relative' onMouseEnter={togglePopup}>
-                <Info />
-              </div>
-              {showPopup && (
-                <div className="absolute top-1 left-7 bg-black text-white px-1 leading-8 rounded-md">
-                  Report issue
-                </div>
-              )}
-            </div>
+          <div className="py-2 flex flex-row justify-between px-4 border-b-2">
+            <div></div>
             <div className="flex text-center flex-col">
-              {/* //! Change name depending on client */}
               <h1 className="font-bold text-lg">Aart</h1>
               <p>AI-assistent</p>
             </div>
@@ -223,18 +178,16 @@ const LangchainChatbot = () => {
               <div key={index} className={`flex justify-${entry.type === 'user' ? 'end' : 'start'} my-2`}>
                 {entry.type === 'bot' && (
                   <div className="profile-pic mr-2">
-                    {/* //! Change assistents profile image for different clients */}
-                    <Aart /> 
+                    <Aart />
                   </div>
                 )}
                 <div
                   className={`${messageClasses[entry.type]} rounded-md px-2 py-1 max-w-[70%] text-${entry.type === 'user' ? 'right bg-black' : 'left bg-[#f7f4f4]'
                     }`}
                 >
-                  {/* //! Change 'Aart' to a different name for different clients */}
-                  <span className="font-bold">{entry.type === 'user' ? 'Jij' : 'Aart '}</span> 
+                  <span className="font-bold">{entry.type === 'user' ? 'Jij' : 'Aart '}</span>
                   <br />
-                  {renderMessage(entry.message)}
+                  {entry.message}
                   <div className="flex justify-end">
                     <h1 className="opacity-50">
                       {entry.time &&
