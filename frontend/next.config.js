@@ -1,22 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const crypto = require('crypto');
-const { i18n } = require('./next-i18next.config');
-
-const allowedNonce = crypto.randomBytes(16).toString('base64');
-
-const ContentSecurityPolicy = `
-  default-src 'none'; 
-  frame-ancestors 'none'; 
-  frame-src https://consentcdn.cookiebot.com; 
-  media-src 'self'; 
-  prefetch-src 'self';
-  connect-src 'self' https://www.google-analytics.com https://consentcdn.cookiebot.com; 
-  font-src 'self' 'unsafe-inline' data: https://use.typekit.net https://fonts.gstatic.com; 
-  img-src 'self' data: blob:; 
-  script-src 'self' 'nonce-${allowedNonce}' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net/en_US/fbevents.js https://consent.cookiebot.com https://consentcdn.cookiebot.com https://googleads.g.doubleclick.net; 
-  style-src 'self' 'unsafe-inline' https://p.typekit.net https://use.typekit.net;
-`;
+const { i18n } = require('./i18nConfig');
 
 const securityHeaders = [
   {
@@ -34,10 +18,6 @@ const securityHeaders = [
   {
     key: 'Referrer-Policy',
     value: 'strict-origin-when-cross-origin'
-  },
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
   }
 ];
 
@@ -76,12 +56,12 @@ let nextConfig = {
     return process.env.APP_ENV === 'development'
       ? []
       : [
-        {
-          // Apply these headers to all routes in your application.
-          source: '/:path*',
-          headers: securityHeaders
-        }
-      ];
+          {
+            // Apply these headers to all routes in your application.
+            source: '/:path*',
+            headers: securityHeaders
+          }
+        ];
   },
 
   // Enables scroll restoration when you go back to previous page
@@ -100,4 +80,4 @@ if (analyzeBundles) {
   nextConfig = withNextBundleAnalyzer(nextConfig);
 }
 
-module.exports = { ...nextConfig, allowedNonce };
+module.exports = nextConfig;
