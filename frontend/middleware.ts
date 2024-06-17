@@ -1,11 +1,18 @@
 /* eslint-disable consistent-return */
 // middleware.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+import { i18nRouter } from 'next-i18n-router';
+import i18nConfig from './i18nConfig';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
 export async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith('/_next') || req.nextUrl.pathname.includes('/api/') || PUBLIC_FILE.test(req.nextUrl.pathname)) {
+  if (
+    req.nextUrl.pathname.startsWith('/_next') ||
+    req.nextUrl.pathname.includes('/api/') ||
+    req.nextUrl.pathname.includes('robots.txt') ||
+    PUBLIC_FILE.test(req.nextUrl.pathname)
+  ) {
     return;
   }
 
@@ -27,7 +34,7 @@ export async function middleware(req: NextRequest) {
   // Replace newline characters and spaces
   const contentSecurityPolicyHeaderValue = ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim();
 
-  const response = NextResponse.next({});
+  const response = i18nRouter(req, i18nConfig);
   response.headers.set('x-nonce', nonce);
   if (process.env.APP_ENV !== 'development') {
     response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue);

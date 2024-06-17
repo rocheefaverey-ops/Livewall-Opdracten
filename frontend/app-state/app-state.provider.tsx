@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ReactNode, ReactElement, useState } from 'react';
 import AppStateContext, { DefaultAppState, defaultAppState } from './app-state.context';
 

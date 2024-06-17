@@ -1,8 +1,8 @@
-import './globals.css';
+import './[locale]/globals.css';
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
   return (
-    <html lang="en">
+    <html lang={params.locale ?? 'nl'}>
       <body>{children}</body>
     </html>
   );
