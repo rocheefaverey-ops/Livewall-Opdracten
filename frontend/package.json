@@ -26,6 +26,7 @@
     "@google-cloud/logging-winston": "6.0.0",
     "@svgr/webpack": "8.1.0",
     "axios": "^1.6.5",
+    "class-variance-authority": "^0.7.0",
     "classnames": "2.3.2",
     "date-fns": "^2.30.0",
     "luxon": "3.4.0",
