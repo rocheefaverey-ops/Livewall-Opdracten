@@ -1,39 +1,49 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
+import { type VariantProps } from 'class-variance-authority';
+import { typographyVariants } from './data/typography.variants.data';
+import { TypographyColor } from 'types/Typography';
+import { typeMapping } from './data/typography.types.data';
 
 type Props = {
   type?: keyof typeof typeMapping;
-  color?: string;
+  color?: TypographyColor;
+  weight?: string;
+  size?: string;
+  mobileSize?: string;
+  setDangerouslyInnerHTML?: boolean;
   className?: string;
   children: ReactNode;
   [key: string]: unknown;
 };
 
-export const typeMapping = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-  h6: 'h6',
-  span: 'span',
-  ul: 'ul',
-  ol: 'ol',
-  p: 'p'
-};
-
-const Typography: React.FC<Props> = ({ children, type = 'p', color = '', className = '', ...props }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Typography: React.FC<Props & VariantProps<typeof typographyVariants>> = ({
+  children,
+  type = 'p',
+  size,
+  mobileSize,
+  family,
+  color,
+  weight,
+  setDangerouslyInnerHTML = false,
+  className = '',
+  ...props
+}) => {
   const CustomTag = (typeMapping[type] ?? 'p') as any;
 
-  const styling = classNames({ [`!${color}`]: color }, className);
+  // When mobileSize is not defined, it will use the same size as the desktop
+  if (mobileSize === undefined) {
+    mobileSize = size;
+  }
 
-  return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <CustomTag {...props} className={styling}>
-      {children}
-    </CustomTag>
-  );
+  const styling = classNames(typographyVariants({ family, color, weight, size, mobileSize }), className);
+
+  const content = setDangerouslyInnerHTML ? { dangerouslySetInnerHTML: { __html: children } } : { children };
+
+  return <CustomTag {...props} className={styling} {...content} />;
 };
 
 export default Typography;
