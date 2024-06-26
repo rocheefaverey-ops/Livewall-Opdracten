@@ -14,14 +14,14 @@ export const typographyVariants = cva(
       },
       size: {
         default: "md:text-[16px] md:leading-[24px]",
-        // h1: "md:text-[80px] md:leading-[80px]",
-        // h2: "md:text-[64px] md:leading-[72px]",
+        h1: "md:text-[36px] md:leading-[24px]",
+        h2: "md:text-[28px] md:leading-[24px]",
         // h3: ...more,
       },
       mobileSize: {
         default: "text-[16px] leading-[26px]",
-        // h1: "text-[48px] leading-[48px]",
-        // h2: "text-[32px] leading-[40px]",
+        h1: "text-[48px] leading-[48px]",
+        h2: "text-[32px] leading-[40px]",
         // h3: ...more,
       },
       color: {

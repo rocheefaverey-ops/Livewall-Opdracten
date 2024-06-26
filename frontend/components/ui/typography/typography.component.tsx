@@ -25,7 +25,6 @@ const Typography: React.FC<Props & VariantProps<typeof typographyVariants>> = ({
   type = 'p',
   size,
   mobileSize,
-  family,
   color,
   weight,
   setDangerouslyInnerHTML = false,
@@ -39,7 +38,7 @@ const Typography: React.FC<Props & VariantProps<typeof typographyVariants>> = ({
     mobileSize = size;
   }
 
-  const styling = classNames(typographyVariants({ family, color, weight, size, mobileSize }), className);
+  const styling = classNames(typographyVariants({ color, weight, size, mobileSize }), className);
 
   const content = setDangerouslyInnerHTML ? { dangerouslySetInnerHTML: { __html: children } } : { children };
 

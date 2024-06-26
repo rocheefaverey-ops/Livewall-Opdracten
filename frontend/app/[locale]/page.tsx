@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Container from '@components/ui/container/container.component';
 import { getDictionary } from './dictionaries';
+import { Typography } from '@components/ui';
 
 type Props = {
   params: { locale: string };
@@ -12,8 +13,8 @@ const Home: NextPage<Props> = async ({ params: { locale } }) => {
     <div>
       <Container>
         <div className="text-center my-4">
-          <h1 className="font-bold text-3xl">{dict.common.title}</h1>
-          <p className="font-medium text-lg">{dict.common.description}</p>
+          <Typography type="h1" size="h1" mobileSize="h2" weight="bold" className="mb-2">{dict.common.title}</Typography>
+          <Typography type="h2" size="default">{dict.common.description}</Typography>
         </div>
       </Container>
     </div>
