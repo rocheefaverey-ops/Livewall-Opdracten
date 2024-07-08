@@ -35,6 +35,11 @@ After setup, the default project structure should look like this:
 README.md
 frontend/
   .husky/
+  app/
+    [locale]/
+    api/
+    styles/
+    layout.tsx
   app-state/
     hooks/
     app-state.context.ts
@@ -42,34 +47,36 @@ frontend/
     index.ts
   assets/
     icon/
-    logo/
   components/
-    layout/
     sections/
     ui/
+  disctionaries/
+    dictionary.ts
+    en.json
+    nl.json
   node_modules/
-  pages/
-    api/
-    _app.tsx
-    404.tsx
-    index.tsx
   public/
     favicon.ico
     locales/
       nl/
-  styles/
-    globals.css
   themes/
+    styles/
+    utils/
+    index.ts
   types/
   utils/
     error-handling/
     helpers/
     hooks/
+    index.ts
   .env.dist
   .env.example
-  .eslintrc.json
+  .eslintrc.js
   .prettierrc
-  next-i18nnext.config.js
+  i18nConfig.js
+  middleware.ts
+  next-env.d.ts
+  next.config.js
   package.json
   postcss.config.js
   tailwind.config.js
@@ -79,10 +86,10 @@ frontend/
 For the project to build, **these folders and filenames must exist**:
 
 **Folders:**
-* `pages/` files inside this folder are treated as routes.
+* `app/` files inside this folder are treated as routes.
 
 **Files:**
-* `pages/_app.tsx` is the Nextjs entry point.
+* `app/[locale]/page.tsx` is the Nextjs entry point.
 
 You may create subdirectories inside `frontend`. For faster rebuilds, only files inside `frontend` are processed by Webpack.<br>
 You need to **put any ts, tsx and CSS files inside `frontend`**, otherwise Webpack won’t see them.
@@ -90,7 +97,7 @@ You need to **put any ts, tsx and CSS files inside `frontend`**, otherwise Webpa
 You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
 
-
+**This version of the boilerplate makes use of Next14's Approuter, read more about the approuter in the [official documentation](https://nextjs.org/docs/app)
 
 ## Creating new components
 
@@ -106,6 +113,7 @@ When creating a new component and deciding on the correct folder for the compone
 Components may however import from same level and utils folder when needed.
 
 **Important - Naming convention** naming convention throughout the app must be consistent, as such all folder must be `kebab-case`.
+**If you ever doubt about naming convention, please contact a fellow developer and ask them to help you**
 
 
 ### `Basic folder setup`
@@ -120,6 +128,17 @@ Each component has to hold these specific files inside its respective folder, ad
     [New component].module.css
 ```
 
+**Try to think how you want to organise your code before you start the project**. It's possible that within a project you end up making multiple 'header' components. In this case you can create a folder names 'headers' and specify the different type of header within this folder. Example:
+```
+  headers/
+    components/
+    homepage/
+      homepage.component.tsx
+    contact/
+      contact.component.tsx
+    detail/
+      detail.component.tsx
+```
 
 ### `Basic component example`
 
