@@ -1,3 +1,5 @@
+"use client"
+
 import React, { ReactNode, useRef, useEffect } from 'react';
 import classes from './modal.module.css';
 
