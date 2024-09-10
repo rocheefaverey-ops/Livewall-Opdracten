@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-import classes from './card.module.css';
 
 type Props = {
   children: ReactNode;
@@ -9,7 +8,7 @@ type Props = {
 };
 
 const Card: React.FC<Props> = ({ children, className = '', onClick }) => (
-  <div className={classNames(classes.card, className)} onClick={onClick}>
+  <div className={classNames('rounded bg-tertiary shadow-medium', className)} onClick={onClick}>
     {children}
   </div>
 );

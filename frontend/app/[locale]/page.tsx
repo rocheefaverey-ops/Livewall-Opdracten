@@ -13,8 +13,12 @@ const Home: NextPage<Props> = async ({ params: { locale } }) => {
     <div>
       <Container>
         <div className="text-center my-4">
-          <Typography type="h1" size="h1" mobileSize="h2" weight="bold" className="mb-2">{dict.common.title}</Typography>
-          <Typography type="h2" size="default">{dict.common.description}</Typography>
+          <Typography type="h1" size="h1" mobileSize="h2" weight="bold" className="mb-2 text-primary">
+            {dict.common.title}
+          </Typography>
+          <Typography type="h2" size="default">
+            {dict.common.description}
+          </Typography>
         </div>
       </Container>
     </div>

@@ -17,7 +17,7 @@ type Props = {
 type Type = 'primary' | 'secondary' | 'tertiary';
 type ButtonElementType = 'button' | 'submit' | 'reset';
 
-const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink = '/', buttonElementType = 'button', className = '', onClick }) => {
+const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink, buttonElementType = 'button', className = '', onClick }) => {
   let btnType;
   switch (type) {
     case 'secondary':
@@ -30,7 +30,8 @@ const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink = '/', b
       btnType = classes['btn--primary'];
   }
 
-  const targetLink = ctaLink.match(/^(https?:\/\/)/) ? '_blank' : '_self';
+  // eslint-disable-next-line no-nested-ternary
+  const targetLink = ctaLink ? (ctaLink.match(/^(https?:\/\/)/) ? '_blank' : '_self') : '_self';
 
   return ctaLink ? (
     <Link href={ctaLink} target={target || targetLink} passHref id={gtm} className={classNames(btnType, className)}>

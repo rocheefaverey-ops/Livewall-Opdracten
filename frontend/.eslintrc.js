@@ -27,10 +27,10 @@ module.exports = {
     '@typescript-eslint/naming-convention': 'off',
     'react/function-component-definition': 'off',
     'react/require-default-props': 'off',
-    'jsx-a11y/click-events-have-key-events': 'off',
-    'jsx-a11y/no-static-element-interactions': 'off',
-    'jsx-a11y/no-noninteractive-element-interactions': 'off',
-    'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/click-events-have-key-events': 'on',
+    'jsx-a11y/no-static-element-interactions': 'on',
+    'jsx-a11y/no-noninteractive-element-interactions': 'on',
+    'jsx-a11y/anchor-is-valid': 'on',
     'import/order': 'off'
   }
 };

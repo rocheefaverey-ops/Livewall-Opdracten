@@ -1,7 +1,6 @@
-"use client"
+'use client';
 
 import React, { ReactNode, useRef, useEffect } from 'react';
-import classes from './modal.module.css';
 
 type Props = {
   children: ReactNode;
@@ -21,7 +20,7 @@ const Modal: React.FC<Props> = ({ showModal, children }) => {
   }, [showModal]);
 
   return (
-    <dialog ref={dialog} className={classes.modal}>
+    <dialog ref={dialog} className="bg-white p-6 border border rounded-md">
       {children}
     </dialog>
   );

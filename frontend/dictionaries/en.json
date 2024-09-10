@@ -6,5 +6,8 @@
   "meta":{
     "title": "LiveWall NextJS Boilerplate",
     "description": "Installation completed, you can start!"
+  },
+  "icons":{
+    "arrowEnter": "Continue"
   }
 }

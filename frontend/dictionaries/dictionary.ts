@@ -7,4 +7,7 @@ export type Dictionary = {
     title: string;
     description: string;
   };
+  icons: {
+    arrowEnter: string;
+  };
 };

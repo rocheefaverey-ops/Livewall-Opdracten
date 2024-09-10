@@ -1,4 +1,3 @@
-import ChevronDown from './chevron/Down.svg';
-import ChevronUp from './chevron/Up.svg';
+import ArrowEnter from './arrow-enter.svg';
 
-export { ChevronDown, ChevronUp };
+export { ArrowEnter };
