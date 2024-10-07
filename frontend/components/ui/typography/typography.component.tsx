@@ -16,6 +16,7 @@ type Props = {
   mobileSize?: string;
   setDangerouslyInnerHTML?: boolean;
   className?: string;
+  family?: string;
   children: ReactNode;
   [key: string]: unknown;
 };
@@ -29,6 +30,7 @@ const Typography: React.FC<Props & VariantProps<typeof typographyVariants>> = ({
   weight,
   setDangerouslyInnerHTML = false,
   className = '',
+  family = 'default',
   ...props
 }) => {
   const CustomTag = (typeMapping[type] ?? 'p') as any;
@@ -38,7 +40,7 @@ const Typography: React.FC<Props & VariantProps<typeof typographyVariants>> = ({
     mobileSize = size;
   }
 
-  const styling = classNames(typographyVariants({ color, weight, size, mobileSize }), className);
+  const styling = classNames(typographyVariants({ color, weight, size, mobileSize, family }), className);
 
   const content = setDangerouslyInnerHTML ? { dangerouslySetInnerHTML: { __html: children } } : { children };
 
