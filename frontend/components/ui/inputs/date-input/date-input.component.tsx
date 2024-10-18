@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 /* eslint-disable no-plusplus */
 import React, { useEffect, useState } from 'react';
@@ -50,7 +50,8 @@ const DatePickerInput: React.FC<Props> = ({
   const styling = classNames(className, `${error ? 'border-statusRed hover:border-statusRed focus:border-statusRed' : ''}`);
 
   const dateInput = (
-    <div
+    <button
+      type="button"
       className="relative w-full"
       onClick={() => {
         if (isMobile) {
@@ -78,7 +79,7 @@ const DatePickerInput: React.FC<Props> = ({
           <div className="bg-transparent rounded-full w-full h-full p-1">{date.toLocaleDateString('nl')}</div>
         )}
       </div>
-    </div>
+    </button>
   );
 
   return (
