@@ -7,7 +7,10 @@ type Props = {
   params: { locale: string };
 };
 
-const Home: NextPage<Props> = async ({ params: { locale } }) => {
+const Home: NextPage<Props> = async ({ params: asyncParams }) => {
+  const params = await asyncParams;
+  const locale = params.locale;
+
   const dict = await getDictionary(locale);
   return (
     <div>
