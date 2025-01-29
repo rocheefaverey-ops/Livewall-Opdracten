@@ -4,8 +4,8 @@ import './globals.css';
 import { getDictionary } from './dictionaries';
 import Providers from './providers';
 
-export async function generateMetadata({ params: asyncParams }: { params: { locale: string } }): Promise<Metadata> {
-  const params = await asyncParams; // Await params
+export async function generateMetadata({ params: asyncParams }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const params = await asyncParams;
   let filteredLocale = params.locale;
 
   if (filteredLocale !== 'nl' && filteredLocale !== 'en') {
@@ -20,8 +20,8 @@ export async function generateMetadata({ params: asyncParams }: { params: { loca
   };
 }
 
-export default async function RootLayout({ children, params: asyncParams }: { children: React.ReactNode; params: { locale: string } }) {
-  const params = await asyncParams; // Await params object itself
+export default async function RootLayout({ children, params: asyncParams }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+  const params = await asyncParams;
   let loc = params.locale ?? 'nl';
 
   if (loc !== 'nl' && loc !== 'en') {

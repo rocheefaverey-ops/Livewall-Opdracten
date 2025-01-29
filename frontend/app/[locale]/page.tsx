@@ -4,12 +4,12 @@ import { getDictionary } from './dictionaries';
 import { Typography } from '@components/ui';
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 const Home: NextPage<Props> = async ({ params: asyncParams }) => {
   const params = await asyncParams;
-  const locale = params.locale;
+  const { locale } = params;
 
   const dict = await getDictionary(locale);
   return (

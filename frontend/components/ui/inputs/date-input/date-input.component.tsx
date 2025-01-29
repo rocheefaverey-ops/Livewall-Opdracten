@@ -3,7 +3,7 @@
 /* eslint-disable no-plusplus */
 import React, { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import nl from 'date-fns/locale/nl';
+import { nl } from 'date-fns/locale/nl';
 import { useAppState } from 'app-state';
 import 'react-datepicker/dist/react-datepicker.css';
 import classNames from 'classnames';
@@ -95,7 +95,11 @@ const DatePickerInput: React.FC<Props> = ({
               minDate={minDate}
               customInput={dateInput}
               locale={appState.language}
-              onChange={(newDate: Date) => onChange(newDate)}
+              onChange={(newDate: Date | null) => {
+                if (newDate) {
+                  onChange(newDate);
+                }
+              }}
               selected={date}
             />
           )}

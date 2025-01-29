@@ -1,6 +1,6 @@
 import Typography from '@components/ui/typography/typography.component';
 import classNames from 'classnames';
-import React from 'react';
+import React, { JSX } from 'react';
 
 type Props = {
   label?: string;
