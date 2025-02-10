@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable no-plusplus */
 import React, { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { nl } from 'date-fns/locale/nl';

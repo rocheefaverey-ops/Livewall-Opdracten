@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { cva } from "class-variance-authority";
 
 // In this file you can pre define options for typography components

@@ -5,12 +5,12 @@ type Props = {
 };
 
 
-const SectionExampe: React.FC<Props> = ({title = 'Section example'}) => {
-  console.log('SectionExampel', title);
+const SectionExample: React.FC<Props> = ({title = 'Section example'}) => {
+  console.log('SectionExamplee', title);
   return (
     <div className="block">{title}</div>
   );
 }
   
 
-export default SectionExampe;
+export default SectionExample;

@@ -22,7 +22,6 @@ const FileInput: React.FC<Props> = ({ children, error = false, errorText, button
   const styling = classNames(className, `${error ? 'border-statusRed hover:border-statusRed focus:border-statusRed' : ''}`);
   return (
     <>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label htmlFor="file-upload" className={styling}>
         {children || (
           <Button type="secondary" className="py-1 pointer-events-none" buttonElementType="submit">

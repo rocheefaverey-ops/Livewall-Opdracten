@@ -25,7 +25,6 @@ const Icon: React.FC<Props> = ({ icon, className, decorative, onClick, buttonCla
       break;
 
     default:
-      // eslint-disable-next-line no-console
       console.warn(`Icon ${icon} not found`);
       break;
   }

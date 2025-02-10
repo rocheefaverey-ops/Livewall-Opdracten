@@ -1,5 +1,5 @@
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable no-undef */
 const { i18n } = require('./i18nConfig');
 
 const securityHeaders = [
@@ -75,7 +75,6 @@ const analyzeBundles = process.env.ANALYZE;
 
 if (analyzeBundles) {
   const withNextBundleAnalyzer =
-    // eslint-disable-next-line import/no-extraneous-dependencies
     require('@next/bundle-analyzer')();
   nextConfig = withNextBundleAnalyzer(nextConfig);
 }

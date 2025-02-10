@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { type VariantProps } from 'class-variance-authority';
