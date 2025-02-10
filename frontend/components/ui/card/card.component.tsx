@@ -6,6 +6,6 @@ type Props = {
   className?: string;
 };
 
-const Card: React.FC<Props> = ({ children, className = '' }) => <div className={classNames('rounded bg-tertiary shadow-medium', className)}>{children}</div>;
+const Card: React.FC<Props> = ({ children, className = '' }) => <div className={classNames('rounded-sm bg-tertiary shadow-medium', className)}>{children}</div>;
 
 export default Card;

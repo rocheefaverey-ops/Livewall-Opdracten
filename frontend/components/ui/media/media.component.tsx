@@ -106,8 +106,8 @@ const Media: React.FC<Props> = ({
   }, []);
 
   const portraitClass = classNames({
-    'max-w-[323px] max-h-[574.22px] aspect-[9/16]': portrait,
-    'max-w-[275px] max-h-full aspect-[9/16]': productPortrait,
+    'max-w-[323px] max-h-[574.22px] aspect-9/16': portrait,
+    'max-w-[275px] max-h-full aspect-9/16': productPortrait,
     'min-w-full': card,
     'min-w-full h-[468px]': mcover,
     'h-[240px] lg:h-[480px] min-w-full': header,
