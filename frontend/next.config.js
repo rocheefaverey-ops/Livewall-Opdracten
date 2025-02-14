@@ -33,7 +33,6 @@ let nextConfig = {
       rule.use.forEach((moduleLoader) => {
         if (/css-loader[/\\](?:cjs|dist|src)/.test(moduleLoader.loader)) {
           if (typeof moduleLoader.options.modules === 'object') {
-            // eslint-disable-next-line no-param-reassign
             moduleLoader.options.modules = {
               ...moduleLoader.options.modules,
               exportLocalsConvention: 'camelCase' // https://github.com/webpack-contrib/css-loader#exportlocalsconvention
@@ -74,8 +73,7 @@ let nextConfig = {
 const analyzeBundles = process.env.ANALYZE;
 
 if (analyzeBundles) {
-  const withNextBundleAnalyzer =
-    require('@next/bundle-analyzer')();
+  const withNextBundleAnalyzer = require('@next/bundle-analyzer')();
   nextConfig = withNextBundleAnalyzer(nextConfig);
 }
 

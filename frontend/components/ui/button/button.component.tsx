@@ -37,6 +37,7 @@ const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink, buttonE
       {children}
     </Link>
   ) : (
+    // eslint-disable-next-line react/button-has-type
     <button className={classNames(classes.btn, btnType, className)} type={buttonElementType} onClick={onClick}>
       {children}
     </button>
