@@ -35,7 +35,6 @@
     "next": "^15.1.6",
     "next-i18n-router": "^5.5.1",
     "next-nprogress-bar": "^2.4.4",
-    "npm-check-updates": "^17.1.14",
     "react": "19.0.0",
     "react-datepicker": "8.0.0",
     "react-dom": "19.0.0",
