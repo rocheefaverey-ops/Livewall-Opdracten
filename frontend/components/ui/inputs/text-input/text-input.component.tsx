@@ -26,9 +26,7 @@ const TextInput: React.FC<Props> = ({ onChange, value, name, autoFocus, placehol
         onChange={(e) => onChange(e.target.value)}
         name={name}
         type={type}
-        // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus={autoFocus}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...inputProps}
       />
       {error && errorText && <ErrorText text={errorText} />}

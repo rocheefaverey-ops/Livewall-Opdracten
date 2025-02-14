@@ -47,7 +47,6 @@ const Dropdown: React.FC<Props> = ({ onChange, name, error = false, errorText, c
           onChange={(e) => {
             onChange(e.target.value);
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...selectProps}
         >
           {renderOptions()}

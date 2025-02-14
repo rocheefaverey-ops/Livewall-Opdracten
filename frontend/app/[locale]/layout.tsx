@@ -30,7 +30,7 @@ export default async function RootLayout({ children, params: asyncParams }: { ch
 
   return (
     <html lang={loc}>
-      <body className="min-h-screen relative">
+      <body>
         <div className="lg:pb-[477px] pb-[589px] h-full">
           <AppStateProvider>
             <Providers>{children}</Providers>

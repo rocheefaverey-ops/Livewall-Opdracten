@@ -30,7 +30,6 @@ const Button: React.FC<Props> = ({ children, target, type, gtm, ctaLink, buttonE
       btnType = classes['btn--primary'];
   }
 
-  // eslint-disable-next-line no-nested-ternary
   const targetLink = ctaLink ? (ctaLink.match(/^(https?:\/\/)/) ? '_blank' : '_self') : '_self';
 
   return ctaLink ? (

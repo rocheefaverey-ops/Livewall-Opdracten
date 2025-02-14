@@ -1,5 +1,5 @@
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable no-undef */
 const { i18n } = require('./i18nConfig');
 
 const securityHeaders = [
@@ -33,7 +33,6 @@ let nextConfig = {
       rule.use.forEach((moduleLoader) => {
         if (/css-loader[/\\](?:cjs|dist|src)/.test(moduleLoader.loader)) {
           if (typeof moduleLoader.options.modules === 'object') {
-            // eslint-disable-next-line no-param-reassign
             moduleLoader.options.modules = {
               ...moduleLoader.options.modules,
               exportLocalsConvention: 'camelCase' // https://github.com/webpack-contrib/css-loader#exportlocalsconvention
@@ -74,9 +73,7 @@ let nextConfig = {
 const analyzeBundles = process.env.ANALYZE;
 
 if (analyzeBundles) {
-  const withNextBundleAnalyzer =
-    // eslint-disable-next-line import/no-extraneous-dependencies
-    require('@next/bundle-analyzer')();
+  const withNextBundleAnalyzer = require('@next/bundle-analyzer')();
   nextConfig = withNextBundleAnalyzer(nextConfig);
 }
 
