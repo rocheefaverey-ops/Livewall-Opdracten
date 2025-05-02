@@ -1,9 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { ApiError } from 'next/dist/server/api-utils';
-import ErrorReporting from './error-reporting';
-import Logger from './logger';
+import { NextApiRequest, NextApiResponse } from "next";
+import { ApiError } from "next/dist/server/api-utils";
+import ErrorReporting from "./error-reporting";
+import Logger from "./logger";
 
-type ApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | ('GET' | 'POST' | 'PUT' | 'DELETE')[];
+
+type ApiMethod = "GET" | "POST" | "PUT" | "DELETE" | ("GET" | "POST" | "PUT" | "DELETE")[];
 type ApiHandler<T> = (req: NextApiRequest, res: NextApiResponse) => Promise<T>;
 
 const isError = (exception: unknown): exception is Error => exception instanceof Error;
@@ -21,21 +22,24 @@ const withExceptionHandler =
   <T>(handler: ApiHandler<T>, method: ApiMethod, encrypted?: boolean) =>
   async (req: NextApiRequest, res: NextApiResponse): Promise<T | void> => {
     try {
-      const requestMethod = req.method && req.method !== 'OPTIONS' ? req.method : req.headers['access-control-request-method'];
+      const requestMethod = req.method && req.method !== "OPTIONS" ? req.method : req.headers["access-control-request-method"];
 
-      if ((!Array.isArray(method) && requestMethod !== method) || (Array.isArray(method) && !method.find((methodItem) => requestMethod === methodItem))) {
+      if (
+        (!Array.isArray(method) && requestMethod !== method) ||
+        (Array.isArray(method) && !method.find((methodItem) => requestMethod === methodItem))
+      ) {
         return res.status(405).send({ message: `Only ${method} requests allowed` });
       }
 
       const data = await handler(req, res);
 
-      if (!data || typeof data === 'string') {
+      if (!data || typeof data === "string") {
         throw new ApiError(500, `Internal Server Error`);
       }
 
       // Convert output to base64 to hide data
       if (encrypted) {
-        const rawData: string = Buffer.from(JSON.stringify(data)).toString('base64');
+        const rawData: string = Buffer.from(JSON.stringify(data)).toString("base64");
         return res.status(200).send(rawData);
       }
       // Regular JSON request
@@ -60,7 +64,7 @@ const withExceptionHandler =
       const responseBody = {
         statusCode,
         timestamp,
-        path: url
+        path: url,
       };
       return res.status(statusCode).send(responseBody);
     }

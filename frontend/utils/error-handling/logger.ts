@@ -1,85 +1,99 @@
-import winston from 'winston';
-import { LoggingWinston } from '@google-cloud/logging-winston';
-import { ConsoleTransportInstance, FileTransportInstance } from 'winston/lib/winston/transports';
+import lodash from "lodash";
+import WinstonLogger from "./winstonlogger";
+import cls from "./cls";
 
-const levels = {
-  emergency: 0,
-  alert: 1,
-  critical: 2,
-  error: 3,
-  warning: 4,
-  notice: 5,
-  info: 6,
-  debug: 7
-};
+const LOG_LEVELS = {
+	emergency: 0,
+	alert: 1,
+	critical: 2,
+	error: 3,
+	warning: 4,
+	notice: 5,
+	info: 6,
+	debug: 7,
+} as const;
 
-// Set colors
-const colors = {
-  emergency: 'red',
-  alert: 'red',
-  critical: 'red',
-  error: 'red',
-  warning: 'yellow',
-  notice: 'magenta',
-  info: 'cyan',
-  debug: 'white'
-};
-winston.addColors(colors);
+type LogLevel = keyof typeof LOG_LEVELS;
 
-// Format logging message
-const format = winston.format.combine(
-  winston.format.splat(),
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
-  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
-);
-
-// Print in console, and log file or cloud depending on env
-const transports: (FileTransportInstance | LoggingWinston | ConsoleTransportInstance)[] = [];
-
-// FILE logging
-if (process.env.LOG_TO_FILE === '1') {
-  transports.push(
-    new winston.transports.File({
-      filename: 'logs/error.log',
-      level: 'error'
-    })
-  );
-
-  transports.push(
-    new winston.transports.File({
-      filename: 'logs/all.log'
-    })
-  );
+interface ILogger {
+	alert(msg: string | any, meta?: any): void;
+	error(msg: string | any, meta?: any): void;
+	warning(msg: string | any, meta?: any): void;
+	notice(msg: string | any, meta?: any): void;
+	info(msg: string | any, meta?: any): void;
+	debug(msg: string | any, meta?: any): void;
 }
 
-// GCP Logging
-if (process.env.LOG_TO_GCP === '1') {
-  transports.push(
-    new LoggingWinston({
-      serviceContext: {
-        service: process.env.GCP_REPORTING_NAME ? process.env.GCP_REPORTING_NAME : process.env.APP_NAME,
-        version: '1.0.0'
-      },
-      projectId: process.env.GCP_LOG_PROJECT ? process.env.GCP_LOG_PROJECT : undefined,
-      keyFilename: process.env.GCP_LOG_KEYFILE ? process.env.GCP_LOG_KEYFILE : undefined,
-      levels
-    })
-  );
-  // CONSOLE logging
-} else {
-  transports.push(
-    new winston.transports.Console({
-      format: winston.format.combine(winston.format.colorize({ all: true }))
-    })
-  );
+class ConsoleLogger implements ILogger {
+	private static shouldLog(level: LogLevel): boolean {
+		const configuredLevel = (process.env.LOG_LEVEL?.toLowerCase() as LogLevel) || "warning";
+		return LOG_LEVELS[level] <= LOG_LEVELS[configuredLevel];
+	}
+
+	private static formatLog(level: LogLevel, msg: string | any, meta: any = {}) {
+		if (!this.shouldLog(level)) return;
+
+		const logEntry = {
+			severity: level.toUpperCase(),
+			message: typeof msg === "string" ? msg : JSON.stringify(msg),
+			...meta,
+		};
+		console.log(JSON.stringify(logEntry));
+	}
+
+	alert(msg: string | any, meta: any = {}) {
+		ConsoleLogger.formatLog("alert", msg, meta);
+	}
+	error(msg: string | any, meta: any = {}) {
+		ConsoleLogger.formatLog("error", msg, meta);
+	}
+	warning(msg: string | any, meta: any = {}) {
+		ConsoleLogger.formatLog("warning", msg, meta);
+	}
+	notice(msg: string | any, meta: any = {}) {
+		ConsoleLogger.formatLog("notice", msg, meta);
+	}
+	info(msg: string | any, meta: any = {}) {
+		ConsoleLogger.formatLog("info", msg, meta);
+	}
+	debug(msg: string | any, meta: any = {}) {
+		ConsoleLogger.formatLog("debug", msg, meta);
+	}
 }
 
-// Initialize Logger
-const Logger = winston.createLogger({
-  level: process.env.LOG_LEVEL ? process.env.LOG_LEVEL : 'warning',
-  levels,
-  format,
-  transports
-});
+export default class Logger {
+	private static finishMeta(meta: any = {}) {
+		const clsFields = cls.logFields ?? {};
 
-export default Logger;
+		if (Object.entries(clsFields).length === 0 && Object.entries(meta).length === 0) return undefined;
+
+		const ret = { ...(clsFields ?? {}) };
+
+		lodash.merge(ret, meta);
+
+		return ret;
+	}
+
+	private static getLogger(): ILogger {
+		return process.env.LOG_STRUCTURED_CONSOLE === "1" ? new ConsoleLogger() : WinstonLogger;
+	}
+
+	public static alert(msg: string | any, meta: any = {}) {
+		this.getLogger().alert(msg, Logger.finishMeta(meta));
+	}
+	public static error(msg: string | any, meta: any = {}) {
+		this.getLogger().error(msg, Logger.finishMeta(meta));
+	}
+	public static warning(msg: string | any, meta: any = {}) {
+		this.getLogger().warning(msg, Logger.finishMeta(meta));
+	}
+	public static notice(msg: string | any, meta: any = {}) {
+		this.getLogger().notice(msg, Logger.finishMeta(meta));
+	}
+	public static info(msg: string | any, meta: any = {}) {
+		this.getLogger().info(msg, Logger.finishMeta(meta));
+	}
+	public static debug(msg: string | any, meta: any = {}) {
+		this.getLogger().debug(msg, Logger.finishMeta(meta));
+	}
+}
