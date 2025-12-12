@@ -15,7 +15,7 @@
     "lodash": "^4.17.21",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "next": "15.5.7"
+    "next": "15.5.9"
   },
   "devDependencies": {
     "typescript": "^5",
