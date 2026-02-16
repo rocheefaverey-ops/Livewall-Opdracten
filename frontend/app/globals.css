@@ -3,9 +3,10 @@
 @config '../tailwind.config.js';
 
 :root {
-  --color-primary: #2363B8;
-  --color-secondary: #2871D1;
-  --color-tertiary: #2C80EB;
+  --color-primary: #19572c;
+  --color-secondary: #47b937;
+  --color-tertiary: #182016;
+  --color-quaternary: #4d8340;
   --color-statusRed: #e82727;
 }
 
