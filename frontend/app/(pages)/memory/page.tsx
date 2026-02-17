@@ -185,7 +185,7 @@ export default function MemoryPage() {
             Goed gedaan!
           </h2>
           <p className="text-gray-600 mb-6">
-            Matched all pairs in <span className="font-bold text-indigo-600">{turns}</span> turns!
+            Alle paren gevonden in <span className="font-bold text-indigo-600">{turns}</span> beurten!
           </p>
           
           <button 
