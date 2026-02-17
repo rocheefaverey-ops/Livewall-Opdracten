@@ -1,6 +1,6 @@
 // frontend/app/(pages)/memory/page.tsx
 "use client";
-
+import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import { useState, useEffect } from "react";
 import { Card } from "./types";
 import MemoryCard from "./components/MemoryCard";
@@ -48,6 +48,7 @@ export default function MemoryPage() {
   const [prevCardId, setPrevCardId] = useState<number | null>(null);
   const [isLocked, setIsLocked] = useState(false);
   const [turns, setTurns] = useState(0);
+  const [showOverlay, setShowOverlay] = useState(false);
   
   const handleDifficulty = (emojiSet: string[]) => {
   setCards(createDeck(emojiSet)); // Create a new board with the chosen set
@@ -73,10 +74,19 @@ export default function MemoryPage() {
         setSeconds((prev) => prev + 1);
       }, 1000);
     }
-
     // This stops the timer when the component closes or the game ends
     return () => clearInterval(interval);
   }, [isActive, isWon]);
+
+  useEffect(() => {
+  if (isWon) {
+    new Audio("/Victorysound.mp3").play();
+    setTimeout(() => setShowOverlay(true), 1000); // 1 second delay
+  } else {
+    setShowOverlay(false);
+  }
+  }, [isWon]);
+    
   
   
   const resetGame = () => {
@@ -96,6 +106,7 @@ export default function MemoryPage() {
     const secondCard = cards.find(c => c.id === secondId);
 
     if (firstCard?.pairId === secondCard?.pairId) {
+      new Audio("/Flipsound.mp3").play();
       // MATCH?
       setCards(prev => prev.map(card => 
         (card.id === firstId || card.id === secondId) 
@@ -127,7 +138,7 @@ export default function MemoryPage() {
 
     // Kan niet clicken tijden animatie.
     if (isLocked) return;
-    
+    new Audio("/Flipsound.mp3").play();
     // Start voor de timer
     if(!isActive && !isWon){
       setIsActive(true);
@@ -161,60 +172,85 @@ export default function MemoryPage() {
   }
 
   return (
-    // diffuclty selector
-    <div className="max-w-2xl mx-auto">
-      <div className="flex gap-4 mb-10 justify-center">
-        <button 
-          onClick={() => handleDifficulty(EASY)}
-          className="px-4 py-2 bg-green-500 text-white rounded-lg font-bold hover:bg-green-600 transition-colors"
-        >
-          Makkelijk (12 kaarten)
-        </button>
+    <div className="max-w-2xl mx-auto"> 
+      <div className="flex flex-wrap gap-4 mb-8 justify-center">
+        {/* Turns Card */}
+        <div className="bg-white px-4 py-2 rounded-2xl shadow-sm border border-indigo-50 text-center min-w-[100px]">
+          <p className="text-xs font-bold text-indigo-400 uppercase tracking-widest">Moves</p>
+          <p className="text-2xl font-black text-indigo-600">{turns}</p>
+        </div>
 
-        <button 
-          onClick={() => handleDifficulty(MEDIUM)}
-          className="px-4 py-2 bg-yellow-500 text-white rounded-lg font-bold hover:bg-yellow-600 transition-colors"
-        >
-          Gemiddeld (16 kaarten)
-        </button>
+        {/* Time Card */}
+          <div className="bg-white px-4 py-2 rounded-2xl shadow-sm border border-indigo-50 text-center min-w-[100px]">
+            <p className="text-xs font-bold text-indigo-400 uppercase tracking-widest">Time</p>
+            <p className="text-2xl font-black text-indigo-600">{seconds}s</p>
+          </div>
 
-        <button 
-          onClick={() => handleDifficulty(HARD)}
-          className="px-4 py-2 bg-red-500 text-white rounded-lg font-bold hover:bg-red-600 transition-colors"
-        >
-          Moeilijk (24 kaarten)
-        </button>
-      </div>
-      
-      <p className="text-center text-gray-600 mb-4">
-        {cards.length} kaarten geladen
-      </p>
-        <p className="text-center text-gray-600 mb-4">
-        {turns}
-      </p>
-      <p className="text-center text-gray-600 mb-4">
-        {numMatched} / {cards.length / 2}
-      </p>
-            <p className="text-center text-gray-600 mb-4">
-        {isWon ? "You Won!" : "Keep going"}
-      </p>
-      <p> 
-        Time: {seconds}
-      </p>
+        {/* Progress Card */}
+          <div className="bg-white px-4 py-2 rounded-2xl shadow-sm border border-indigo-50 text-center min-w-[100px]">
+            <p className="text-xs font-bold text-indigo-400 uppercase tracking-widest">Matches</p>
+            <p className="text-2xl font-black text-indigo-600">{numMatched} / {cards.length / 2}</p>
+          </div>
+
+        {/* Status Badge */}
+          <div className={`px-6 py-2 rounded-2xl flex items-center shadow-sm font-bold transition-all ${
+            isWon ? "bg-green-500 text-white animate-bounce" : "bg-indigo-50 text-indigo-400"
+          }`}>
+            {isWon ? "🏆 Winner!" : "Keep going!"}
+          </div>
+        </div>
+
       {/* Reset Button*/}
-      <button
-        onClick={resetGame}
-        className="mb-10 mx-auto block bg-indigo-600 text-white py-3 px-10 rounded-xl font-bold text-lg hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
-      >
-        Restart Game
-      </button>
-    
+        <button
+          onClick={resetGame}
+          className="group relative mb-8 mx-auto flex items-center gap-2 bg-indigo-600 px-8 py-4 rounded-2xl font-black text-white transition-all duration-150 [transform-style:preserve-3d] active:translate-y-1 active:[transform:rotateX(20deg)] shadow-[0_8px_0_0_#4338ca] active:shadow-none"
+        >
+          <span className="text-xl">↺</span>
+          RESTART GAME
+        </button>
+        
+      {/* Difficulty Selector */}
+        <div className="flex bg-gray-100 p-1.5 rounded-2xl w-fit mx-auto mb-10 shadow-inner">
+          <button 
+            onClick={() => handleDifficulty(EASY)}
+            className={`px-6 py-2 rounded-xl font-bold transition-all ${
+              cards.length === 12 
+                ? "bg-white text-green-600 shadow-sm scale-100" 
+                : "text-gray-500 hover:text-gray-700 scale-95"
+            }`}
+          >
+            🌱 Easy
+          </button>
+
+          <button 
+            onClick={() => handleDifficulty(MEDIUM)}
+            className={`px-6 py-2 rounded-xl font-bold transition-all ${
+              cards.length === 16 
+                ? "bg-white text-yellow-600 shadow-sm scale-100" 
+                : "text-gray-500 hover:text-gray-700 scale-95"
+            }`}
+          >
+            ⚡ Medium
+          </button>
+
+          <button 
+            onClick={() => handleDifficulty(HARD)}
+            className={`px-6 py-2 rounded-xl font-bold transition-all ${
+              cards.length === 24 
+                ? "bg-white text-red-600 shadow-sm scale-100" 
+                : "text-gray-500 hover:text-gray-700 scale-95"
+            }`}
+          >
+            🔥 Hard
+          </button>
+        </div>
+
       {/* WIN OVERLAY */}
-      {isWon && (
+      {showOverlay && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
-          <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform animate-in zoom-in duration-300">
+          <div className="slide-in-from-bottom-10 bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform animate-in zoom-in duration-300">
             {/* Score Performance Steren*/}
-            <h2 className="text-4xl mb-2">
+            <h2 className="animate-bounce text-4xl mb-2">
                   {turns <= 10 
                   ? "⭐⭐⭐" 
                   : turns <= 18 
@@ -245,9 +281,13 @@ export default function MemoryPage() {
       )}
 
       {/* Hier komt straks het grid */}
-      <div className={`grid gap-3 ${cards.length > 16 ? 'grid-cols-6' : 'grid-cols-4'}`}>
+      <div className={`grid gap-3 mx-auto ${cards.length === 12 ? 'grid-cols-3' : 'grid-cols-4'}`}>
         {cards.map((card) => (
-          <MemoryCard key={card.id} card={card} onClick={flipCard} />
+          <MemoryCard 
+          key={card.id} 
+          card={card} 
+          onClick={flipCard} 
+          />
         ))}
       </div>
     </div>

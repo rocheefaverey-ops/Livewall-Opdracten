@@ -11,19 +11,20 @@
   "dependencies": {
     "@google-cloud/error-reporting": "^3.0.5",
     "@google-cloud/logging-winston": "^6.0.0",
-    "winston": "^3.17.0",
     "lodash": "^4.17.21",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
     "next": "15.5.9",
-    "typescript": "^5"
+    "react": "^19.2.1",
+    "react-canvas-confetti": "^2.0.7",
+    "react-dom": "^19.2.1",
+    "typescript": "^5",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4",
     "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
     "tailwindcss": "^4"
   },
   "volta": {
