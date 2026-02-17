@@ -1,7 +1,7 @@
 // frontend/app/(pages)/memory/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "./types";
 import MemoryCard from "./components/MemoryCard";
 import { idText } from "typescript";
@@ -39,6 +39,27 @@ export default function MemoryPage() {
   const [turns, setTurns] = useState(0);
   
   
+  //const [numMatched, setMatched] = useState(0);
+  //const [isWon, setIsWon] = useState(false);
+  const numMatched = cards.filter(card => card.isMatched).length / 2;
+  const isWon = numMatched === cards.length/2;
+  
+  //timer states
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  
+  useEffect(() => {
+    let interval: any;
+
+    if (isActive && !isWon) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev + 1);
+      }, 1000);
+    }
+
+    // This stops the timer when the component closes or the game ends
+    return () => clearInterval(interval);
+  }, [isActive, isWon]);
   
   function checkMatch(firstId: number, secondId: number) {
     setTurns(prevTurns => prevTurns + 1);
@@ -53,6 +74,10 @@ export default function MemoryPage() {
           : card
       ));
       setPrevCardId(null);
+
+      //setMatched(prevnumMatched => prevnumMatched + 1);
+      //setIsWon(numMatched === cards.length / 2);
+    
     } else {
       // NO MATCH?
       setIsLocked(true);
@@ -73,6 +98,11 @@ export default function MemoryPage() {
 
     // Kan niet clicken tijden animatie.
     if (isLocked) return;
+    
+    // Start voor de timer
+    if(!isActive && !isWon){
+      setIsActive(true);
+      }
 
     // Check als card al geclicked is.
     const clickedCard = cards.find((c) => c.id === clickedId);
@@ -108,6 +138,17 @@ export default function MemoryPage() {
       </p>
         <p className="text-center text-gray-600 mb-4">
         {turns}
+      </p>
+      <p className="text-center text-gray-600 mb-4">
+        {numMatched} / {cards.length / 2}
+      </p>
+            <p className="text-center text-gray-600 mb-4">
+        {isWon ? "You Won!" : "Keep going"}
+      </p>
+      
+      
+      <p> 
+        Time: {seconds}
       </p>
 
       {/* Hier komt straks het grid */}
