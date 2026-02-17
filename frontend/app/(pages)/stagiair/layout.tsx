@@ -10,7 +10,7 @@ export default function StagiairLayout({
       <Navigation />
       <main className="">{children}</main>
       <footer className="bg-tertiary text-center text-gray-400 text-sm ">
-        Gemaakt door Rochee Faverey — Eerste dag stage 🚀
+        Gemaakt door Rochee Faverey — Eerste dag stage ?🚀
       </footer>
     </div>
   );
