@@ -6,8 +6,9 @@ import { Card } from "./types";
 import MemoryCard from "./components/MemoryCard";
 import { idText } from "typescript";
 
-//const EMOJIS = ["🐶", "🐱", "🐸", "🦊", "🐻", "🐼", "🐨", "🦁"];
-const EMOJIS = ["🐶","🐱","🐸"];
+const EASY = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊"]; //easy
+const MEDIUM = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼"];//Medium
+const HARD = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐷"]; //Hard
 
 function shuffle(array: Card[]) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -17,10 +18,11 @@ function shuffle(array: Card[]) {
   return array;
 }
 
-function createDeck(): Card[] {
+
+function createDeck(emojiSet: string[]): Card[] {
   const cards: Card[] = [];
 
-  EMOJIS.forEach((emoji, index) => {
+  emojiSet.forEach((emoji, index) => {
     // Elk emoji komt 2x voor (een paar)
     cards.push({
       id: index * 2,
@@ -42,12 +44,18 @@ function createDeck(): Card[] {
 }
 
 export default function MemoryPage() {
-  const [cards, setCards] = useState<Card[]>(createDeck());
+  const [cards, setCards] = useState<Card[]>(createDeck(EASY));
   const [prevCardId, setPrevCardId] = useState<number | null>(null);
   const [isLocked, setIsLocked] = useState(false);
   const [turns, setTurns] = useState(0);
   
-  
+  const handleDifficulty = (emojiSet: string[]) => {
+  setCards(createDeck(emojiSet)); // Create a new board with the chosen set
+  setTurns(0);                   // Reset the moves
+  setSeconds(0);                 // Reset the clock
+  setIsActive(false);            // Stop the timer
+  };
+
   //const [numMatched, setMatched] = useState(0);
   //const [isWon, setIsWon] = useState(false);
   const numMatched = cards.filter(card => card.isMatched).length / 2;
@@ -72,7 +80,7 @@ export default function MemoryPage() {
   
   
   const resetGame = () => {
-  setCards(createDeck()); 
+  setCards(createDeck(EASY)); 
   
   setTurns(0);
   setSeconds(0);
@@ -153,7 +161,34 @@ export default function MemoryPage() {
   }
 
   return (
+    
     <div className="max-w-2xl mx-auto">
+      <div className="flex gap-4 mb-10 justify-center">
+        <button 
+          onClick={() => handleDifficulty(EASY)}
+          className="px-4 py-2 bg-green-500 text-white rounded-lg font-bold hover:bg-green-600 transition-colors"
+        >
+          Makkelijk (12 kaarten)
+        </button>
+
+        <button 
+          onClick={() => handleDifficulty(MEDIUM)}
+          className="px-4 py-2 bg-yellow-500 text-white rounded-lg font-bold hover:bg-yellow-600 transition-colors"
+        >
+          Gemiddeld (16 kaarten)
+        </button>
+
+        <button 
+          onClick={() => handleDifficulty(HARD)}
+          className="px-4 py-2 bg-red-500 text-white rounded-lg font-bold hover:bg-red-600 transition-colors"
+        >
+          Moeilijk (24 kaarten)
+        </button>
+      </div>
+      
+      
+      
+      
       <p className="text-center text-gray-600 mb-4">
         {cards.length} kaarten geladen
       </p>
@@ -180,9 +215,23 @@ export default function MemoryPage() {
     {isWon && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
         <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform animate-in zoom-in duration-300">
-          <h2 className="text-4xl mb-2">🎉</h2>
+          <h2 className="text-4xl mb-2">
+                {turns <= 10 
+                ? "⭐⭐⭐" 
+                : turns <= 18 
+                ? "⭐⭐" 
+                : "⭐"
+              }
+
+          </h2>
+
           <h2 className="text-2xl font-black text-gray-800 mb-2">
-            Goed gedaan!
+            {turns <= 10 
+                ? "Perfecte score!" 
+                : turns <= 18 
+                ? "Netjes hoor! " 
+                : "Goed geprobeerd! "
+              }
           </h2>
           <p className="text-gray-600 mb-6">
             Alle paren gevonden in <span className="font-bold text-indigo-600">{turns}</span> beurten!
