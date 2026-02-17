@@ -70,6 +70,18 @@ export default function MemoryPage() {
     return () => clearInterval(interval);
   }, [isActive, isWon]);
   
+  
+  const resetGame = () => {
+  setCards(createDeck()); 
+  
+  setTurns(0);
+  setSeconds(0);
+  
+  setPrevCardId(null);
+  setIsActive(false); // This stops the timer
+  setIsLocked(false);  // In case the board was locked during a match check
+  };
+
   function checkMatch(firstId: number, secondId: number) {
     setTurns(prevTurns => prevTurns + 1);
     const firstCard = cards.find(c => c.id === firstId);
@@ -154,11 +166,37 @@ export default function MemoryPage() {
             <p className="text-center text-gray-600 mb-4">
         {isWon ? "You Won!" : "Keep going"}
       </p>
-      
-      
       <p> 
         Time: {seconds}
       </p>
+      <button
+        onClick={resetGame}
+        className="mb-10 mx-auto block bg-indigo-600 text-white py-3 px-10 rounded-xl font-bold text-lg hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
+      >
+        Restart Game
+      </button>
+    
+    {/* WIN OVERLAY */}
+    {isWon && (
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
+        <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform animate-in zoom-in duration-300">
+          <h2 className="text-4xl mb-2">🎉</h2>
+          <h2 className="text-2xl font-black text-gray-800 mb-2">
+            Goed gedaan!
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Matched all pairs in <span className="font-bold text-indigo-600">{turns}</span> turns!
+          </p>
+          
+          <button 
+            onClick={resetGame}
+            className="w-full bg-indigo-600 text-white py-3 px-6 rounded-xl font-bold text-lg hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
+    )}
 
       {/* Hier komt straks het grid */}
       <div className="grid grid-cols-4 gap-3">

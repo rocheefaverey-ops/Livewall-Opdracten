@@ -21,7 +21,7 @@ export default function MemoryCard({ card, onClick ,}: MemoryCardProps) {
       
       className={`
         aspect-square rounded-xl shadow flex items-center justify-center text-3xl 
-        transition-all duration-300 transform active:scale-95
+        transition-all duration-300 transform active:scale-95 hover:scale-105
         ${card.isFlipped 
           ? "bg-white border-2 border-transparent" 
           : "bg-indigo-600 text-white hover:bg-indigo-500"}
