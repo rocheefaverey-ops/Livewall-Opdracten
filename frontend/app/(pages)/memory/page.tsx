@@ -161,7 +161,7 @@ export default function MemoryPage() {
   }
 
   return (
-    
+    // diffuclty selector
     <div className="max-w-2xl mx-auto">
       <div className="flex gap-4 mb-10 justify-center">
         <button 
@@ -186,9 +186,6 @@ export default function MemoryPage() {
         </button>
       </div>
       
-      
-      
-      
       <p className="text-center text-gray-600 mb-4">
         {cards.length} kaarten geladen
       </p>
@@ -204,6 +201,7 @@ export default function MemoryPage() {
       <p> 
         Time: {seconds}
       </p>
+      {/* Reset Button*/}
       <button
         onClick={resetGame}
         className="mb-10 mx-auto block bg-indigo-600 text-white py-3 px-10 rounded-xl font-bold text-lg hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
@@ -211,50 +209,45 @@ export default function MemoryPage() {
         Restart Game
       </button>
     
-    {/* WIN OVERLAY */}
-    {isWon && (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
-        <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform animate-in zoom-in duration-300">
-          <h2 className="text-4xl mb-2">
-                {turns <= 10 
-                ? "⭐⭐⭐" 
-                : turns <= 18 
-                ? "⭐⭐" 
-                : "⭐"
-              }
-
-          </h2>
-
-          <h2 className="text-2xl font-black text-gray-800 mb-2">
-            {turns <= 10 
-                ? "Perfecte score!" 
-                : turns <= 18 
-                ? "Netjes hoor! " 
-                : "Goed geprobeerd! "
-              }
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Alle paren gevonden in <span className="font-bold text-indigo-600">{turns}</span> beurten!
-          </p>
-          
-          <button 
-            onClick={resetGame}
-            className="w-full bg-indigo-600 text-white py-3 px-6 rounded-xl font-bold text-lg hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
-          >
-            Play Again
-          </button>
+      {/* WIN OVERLAY */}
+      {isWon && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform animate-in zoom-in duration-300">
+            {/* Score Performance Steren*/}
+            <h2 className="text-4xl mb-2">
+                  {turns <= 10 
+                  ? "⭐⭐⭐" 
+                  : turns <= 18 
+                  ? "⭐⭐" 
+                  : "⭐"
+                }
+            </h2>
+            <h2 className="text-2xl font-black text-gray-800 mb-2">
+              {turns <= 10 
+                  ? "Perfecte score!" 
+                  : turns <= 18 
+                  ? "Netjes hoor! " 
+                  : "Goed geprobeerd! "
+                }
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Alle paren gevonden in <span className="font-bold text-indigo-600">{turns}</span> beurten!
+            </p>
+            {/* Reset Button Overlay*/}
+            <button 
+              onClick={resetGame}
+              className="w-full bg-indigo-600 text-white py-3 px-6 rounded-xl font-bold text-lg hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
+            >
+              Play Again
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
       {/* Hier komt straks het grid */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className={`grid gap-3 ${cards.length > 16 ? 'grid-cols-6' : 'grid-cols-4'}`}>
         {cards.map((card) => (
-        <MemoryCard
-          key={card.id}
-          card={card}
-          onClick={(cardID) => flipCard(cardID)}
-        />
+          <MemoryCard key={card.id} card={card} onClick={flipCard} />
         ))}
       </div>
     </div>
