@@ -74,7 +74,6 @@ export default function MemoryPage() {
         setSeconds((prev) => prev + 1);
       }, 1000);
     }
-    // This stops the timer when the component closes or the game ends
     return () => clearInterval(interval);
   }, [isActive, isWon]);
 
