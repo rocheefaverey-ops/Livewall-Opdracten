@@ -20,7 +20,7 @@ export default function QuestionCard({ question, questionNumber, totalQuestions,
     const hasAnswered = selectedAnswer !== null;
     
     return(
-      <div className="max-w-2xl mx-auto">
+      <div key = {questionNumber} className="max-w-2xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-6">
               {/* Voortgang */}
               <p className="text-sm text-gray-500 mb-4">
@@ -61,7 +61,8 @@ export default function QuestionCard({ question, questionNumber, totalQuestions,
                       key={index}
                       onClick={() => !showFeedback && onSelectAnswer(index)}
                       disabled ={showFeedback}
-                      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${buttonClasses}`}
+                      style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'forwards' }}
+                      className={`animate-shrink-in opacity-0 w-full text-left p-4 rounded-xl border-2 transition-all ${buttonClasses}`}
     >
                       {option}
                       </button>

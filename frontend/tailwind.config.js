@@ -13,7 +13,19 @@ module.exports = {
         },
         fontFamily: {
           default: 'Open Sans, sans-serif'
+        },
+        // --- Mijn added keyframes---
+      keyframes: {
+        shrinkIn: {
+          '0%': { opacity: '0', transform: 'scale(0.8)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
         }
+      },
+      animation: {
+        'shrink-in': 'shrinkIn 0.3s ease-out forwards',
+      }
+      // -------------------------
+
       },
     },
     safelist: [],
