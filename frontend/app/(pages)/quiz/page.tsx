@@ -7,7 +7,6 @@ import { QuizState } from "./types";
 import QuestionCard from "./components/QuestionCard";
 import ProgressBar from "./components/ProgressBar";
 import Leaderboard from "./components/Leaderboard";
-import { set } from "lodash";
 
 const initialState: QuizState = {
   currentQuestionIndex: 0,
