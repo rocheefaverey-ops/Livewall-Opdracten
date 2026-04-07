@@ -1,10 +1,8 @@
 // frontend/app/(pages)/memory/page.tsx
 "use client";
-import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import { useState, useEffect } from "react";
 import { Card } from "./types";
 import MemoryCard from "./components/MemoryCard";
-import { idText } from "typescript";
 
 const EASY = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊"]; //easy
 const MEDIUM = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼"];//Medium
@@ -44,7 +42,11 @@ function createDeck(emojiSet: string[]): Card[] {
 }
 
 export default function MemoryPage() {
-  const [cards, setCards] = useState<Card[]>(createDeck(EASY));
+  const [cards, setCards] = useState<Card[]>([]);
+
+  useEffect(() => {
+    setCards(createDeck(EASY));
+  }, []);
   const [prevCardId, setPrevCardId] = useState<number | null>(null);
   const [isLocked, setIsLocked] = useState(false);
   const [turns, setTurns] = useState(0);
@@ -60,7 +62,7 @@ export default function MemoryPage() {
   //const [numMatched, setMatched] = useState(0);
   //const [isWon, setIsWon] = useState(false);
   const numMatched = cards.filter(card => card.isMatched).length / 2;
-  const isWon = numMatched === cards.length/2;
+  const isWon = cards.length > 0 && numMatched === cards.length/2;
   
   //timer states
   const [seconds, setSeconds] = useState(0);
@@ -79,7 +81,7 @@ export default function MemoryPage() {
 
   useEffect(() => {
   if (isWon) {
-    new Audio("/Victorysound.mp3").play();
+    new Audio("/Victorysound.mp3").play().catch(() => {});
     setTimeout(() => setShowOverlay(true), 1000); // 1 second delay
   } else {
     setShowOverlay(false);
