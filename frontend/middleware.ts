@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const nonce = btoa(crypto.randomUUID());
   const cspHeader = `
     default-src 'self';
     connect-src 'self' https://www.google-analytics.com https://consentcdn.cookiebot.com;
